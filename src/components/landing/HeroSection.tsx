@@ -1,0 +1,73 @@
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Phone, Calendar } from "lucide-react";
+
+const HeroSection = () => {
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: "var(--hero-gradient)" }}>
+      {/* Decorative circles */}
+      <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary-foreground/5 blur-3xl" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full bg-primary-foreground/5 blur-3xl" />
+
+      <div className="container mx-auto px-6 py-20 relative z-10">
+        <div className="max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary-foreground/10 text-primary-foreground/80 text-sm font-medium mb-6 backdrop-blur-sm">
+              🐾 Atendimento 24 horas • Recife, PE
+            </span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6"
+          >
+            Onde a tecnologia de ponta encontra o{" "}
+            <span className="italic text-accent">cuidado</span>{" "}
+            que seu pet merece.
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed"
+          >
+            Hospital Veterinário Harmonia: Referência em medicina veterinária de alta complexidade em Recife. 
+            Atendimento 24h, especialistas renomados e infraestrutura completa para cuidar de quem você ama.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4"
+          >
+            <Button variant="hero" size="lg" className="text-base px-8 py-6 rounded-full">
+              <Phone className="mr-2 h-5 w-5" />
+              Falar com Emergência 24h
+            </Button>
+            <Button variant="heroOutline" size="lg" className="text-base px-8 py-6 rounded-full">
+              <Calendar className="mr-2 h-5 w-5" />
+              Agendar Especialista
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Bottom wave */}
+      <div className="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+          <path d="M0 120L60 105C120 90 240 60 360 52.5C480 45 600 60 720 67.5C840 75 960 75 1080 67.5C1200 60 1320 45 1380 37.5L1440 30V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="hsl(40 33% 97%)" />
+        </svg>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
