@@ -1,4 +1,5 @@
 import { Phone, Clock, Instagram, Facebook, MapPin } from "lucide-react";
+import logoFull from "@/assets/logo-full.png";
 
 const Footer = () => {
   return (
@@ -7,7 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <h3 className="text-2xl font-bold font-display mb-3">Harmonia</h3>
+            <img src={logoFull} alt="Hospital Veterinário Harmonia" className="h-12 brightness-0 invert mb-3" />
             <p className="text-primary-foreground/60 text-sm leading-relaxed">
               Hospital Veterinário referência em medicina de alta complexidade em Recife.
             </p>
