@@ -27,9 +27,9 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6"
           >
-            Onde a tecnologia de ponta encontra o{" "}
-            <span className="italic text-accent">cuidado</span>{" "}
-            que seu pet merece.
+            Há 30 anos referência em{" "}
+            <span className="italic text-accent">Medicina Veterinária</span>{" "}
+            no Nordeste.
           </motion.h1>
 
           <motion.p
@@ -38,7 +38,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed"
           >
-            Hospital Veterinário Harmonia: Referência em medicina veterinária de alta complexidade em Recife. 
+            Cuidado, respeito e excelência em cada atendimento. 
             Atendimento 24h, especialistas renomados e infraestrutura completa para cuidar de quem você ama.
           </motion.p>
 
