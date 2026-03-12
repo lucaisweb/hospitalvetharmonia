@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Clock, Microscope, Heart } from "lucide-react";
+import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const pillars = [
 {
