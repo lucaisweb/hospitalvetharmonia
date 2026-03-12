@@ -48,7 +48,7 @@ const HeroSection = () => {
             className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed">
             
             Cuidado, respeito e excelência em cada atendimento. 
-            Atendimento 24h, especialistas renomados e infraestrutura completa para cuidar de quem você ama.
+          
           </motion.p>
 
           <motion.div
