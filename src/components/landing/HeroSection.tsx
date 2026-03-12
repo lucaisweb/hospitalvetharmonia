@@ -37,7 +37,7 @@ const HeroSection = () => {
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
             
             Há mais de 30 anos referência em{" "}
-            <span className="italic text-green-300">Medicina Veterinária</span>{" "}
+            <span className="font-bold text-green-300">Medicina Veterinária</span>{" "}
             no Nordeste.
           </motion.h1>
 
