@@ -66,10 +66,17 @@ const HeroSection = () => {
       </div>
 
       {/* Bottom wave */}
-      <div className="absolute bottom-0 left-0 right-0">
-        
-
-        
+      <div className="absolute -bottom-1 left-0 right-0 overflow-hidden leading-[0]">
+        <svg
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="w-full h-[60px] md:h-[80px] lg:h-[120px]"
+        >
+          <path
+            d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"
+            className="fill-background"
+          />
+        </svg>
       </div>
     </section>);
 
