@@ -23,9 +23,12 @@ const pillars = [
 const ValueProps = () => {
   return (
     <section className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-        <img src={simboloHarmonia} alt="" className="w-[400px] h-[400px] object-contain opacity-[0.05]" />
-      </div>
+      <img
+        src={simboloHarmonia}
+        alt=""
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] object-contain pointer-events-none select-none brightness-0 invert"
+        style={{ opacity: 0.07 }}
+      />
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
