@@ -55,7 +55,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex justify-center sm:justify-start">
+            className="flex justify-center">
             
             <Button variant="hero" size="lg" className="text-base px-8 py-6 rounded-full">
               <Phone className="mr-2 h-5 w-5" />
