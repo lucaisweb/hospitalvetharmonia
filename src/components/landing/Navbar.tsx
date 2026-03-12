@@ -43,7 +43,7 @@ const Navbar = () => {
               <a href="#sobre" className="text-primary-foreground/70 hover:text-primary-foreground">Sobre</a>
               <a href="#unidades" className="text-primary-foreground/70 hover:text-primary-foreground">Unidades</a>
               <a href="#especialidades" className="text-primary-foreground/70 hover:text-primary-foreground">Especialidades</a>
-              <Button variant="hero" size="sm" className="rounded-full w-fit">
+              <Button variant="hero" size="sm" className="rounded-full w-fit bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/40">
                 <Phone className="w-4 h-4 mr-1" /> Emergência 24h
               </Button>
             </div>
