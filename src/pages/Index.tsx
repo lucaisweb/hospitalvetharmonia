@@ -6,6 +6,7 @@ import SpecialtiesSection from "@/components/landing/SpecialtiesSection";
 import UnitsSection from "@/components/landing/UnitsSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import Footer from "@/components/landing/Footer";
+import WaveDivider from "@/components/landing/WaveDivider";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const Index = () => {
@@ -25,16 +26,21 @@ const Index = () => {
       <div className="relative z-10">
         <Navbar />
         <HeroSection />
+        <WaveDivider fillColor="hsl(var(--background))" bgColor="hsl(var(--primary))" />
         <div id="unidades">
           <UnitsSection />
         </div>
+        <WaveDivider fillColor="hsl(var(--background))" bgColor="hsl(var(--background))" flip />
         <div id="sobre">
           <ValueProps />
         </div>
+        <WaveDivider fillColor="hsl(var(--background))" bgColor="hsl(var(--background))" />
         <SpecialtiesSection />
+        <WaveDivider fillColor="hsl(var(--background))" bgColor="hsl(var(--background))" flip />
         <div id="servicos">
           <ServicesSection />
         </div>
+        <WaveDivider fillColor="hsl(var(--background))" bgColor="hsl(var(--background))" />
         <TestimonialsSection />
         <Footer />
       </div>
