@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Clock, Microscope, Heart } from "lucide-react";
+import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const pillars = [
 {
@@ -21,7 +22,10 @@ const pillars = [
 
 const ValueProps = () => {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+        <img src={simboloHarmonia} alt="" className="w-[400px] h-[400px] object-contain opacity-[0.05]" />
+      </div>
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
