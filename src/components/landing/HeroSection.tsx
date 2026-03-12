@@ -38,7 +38,7 @@ const HeroSection = () => {
             
             Há mais de 30 anos referência em{" "}
             <span className="font-bold text-green-300">Medicina Veterinária</span>{" "}
-            no Nordeste.
+            no Brasil.
           </motion.h1>
 
           <motion.p
