@@ -9,27 +9,24 @@ import unidadeBoaViagem from "@/assets/unidade-boa-viagem.png";
 const units = [
   {
     name: "Casa Forte",
-    address: "Estrada do Encanamento, Nº 585, Casa Forte, Recife – PE",
-    phone: "(81) 3333-0001",
+    address: "Estr. do Encanamento, 585 - Casa Forte, Recife - PE, 52070-000",
+    phone: "(81) 3126-7555",
     image: unidadeCasaForte,
-    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.9267!3d-8.0381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDInMTcuMiJTIDM0wrA1NScyNC4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000000",
-    mapsLink: "https://www.google.com/maps/search/Estrada+do+Encanamento+585+Casa+Forte+Recife+PE",
+    mapsLink: "https://share.google/KdGA0GIwjDhWEdQu6",
   },
   {
     name: "Madalena",
-    address: "Av. Visconde de Albuquerque, 894, Madalena, Recife – PE",
-    phone: "(81) 3333-0002",
+    address: "Av. Visc. de Albuquerque, 894 - Madalena, Recife - PE, 50610-090",
+    phone: "(81) 3126-7555",
     image: unidadeMadalena,
-    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.9167!3d-8.0551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDMnMTguNCJTIDM0wrA1NScwMC4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000001",
-    mapsLink: "https://www.google.com/maps/search/Av+Visconde+de+Albuquerque+894+Madalena+Recife+PE",
+    mapsLink: "https://share.google/MxoNRPUdrndN78D0M",
   },
   {
     name: "Boa Viagem",
-    address: "Av. Eng. Domingos Ferreira, 3628, Boa Viagem, Recife – PE",
-    phone: "(81) 3333-0003",
+    address: "Av. Eng. Domingos Ferreira, 3628 - Boa Viagem, Recife - PE, 51011-050",
+    phone: "(81) 3126-7555",
     image: unidadeBoaViagem,
-    mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.8867!3d-8.1181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDcnMDUuMiJTIDM0wrA1MycxMi4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000002",
-    mapsLink: "https://www.google.com/maps/search/Av+Eng+Domingos+Ferreira+3628+Boa+Viagem+Recife+PE",
+    mapsLink: "https://share.google/nNducPeQ5eSCLwDwv",
   },
 ];
 
