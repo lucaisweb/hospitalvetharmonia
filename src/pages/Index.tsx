@@ -30,6 +30,7 @@ const Index = () => {
         <div id="sobre">
           <ValueProps />
         </div>
+        <SpecialtiesSection />
         <div id="servicos">
           <ServicesSection />
         </div>
