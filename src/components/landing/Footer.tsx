@@ -1,9 +1,16 @@
 import { Phone, Clock, Instagram, Facebook, MapPin } from "lucide-react";
 import logoFull from "@/assets/logo-full.png";
+import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground text-primary-foreground">
+    <footer className="bg-foreground text-primary-foreground relative overflow-hidden">
+      {/* Marca d'água */}
+      <img
+        src={simboloHarmonia}
+        alt=""
+        className="absolute right-[-80px] bottom-[-60px] w-[400px] h-[400px] object-contain opacity-[0.04] pointer-events-none select-none"
+      />
       <div className="container mx-auto px-6 py-16">
         <div className="grid md:grid-cols-4 gap-10">
           {/* Brand */}
