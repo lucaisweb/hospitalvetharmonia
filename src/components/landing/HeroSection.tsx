@@ -57,7 +57,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="flex justify-center">
             
-            <Button variant="hero" size="lg" className="text-base px-8 py-6 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/40 animate-pulse">
+            <Button variant="hero" size="lg" className="text-base px-8 py-6 rounded-full bg-red-600 hover:bg-red-700 text-white shadow-lg shadow-red-600/40">
               <Phone className="mr-2 h-5 w-5" />
               Falar com Emergência 24h
             </Button>
