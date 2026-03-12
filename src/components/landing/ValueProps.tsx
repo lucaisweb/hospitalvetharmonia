@@ -51,11 +51,13 @@ const PillarCard = ({ pillar, i }: { pillar: typeof pillars[0]; i: number }) => 
       className="bg-card rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 border border-border/50 flex flex-col items-center justify-center"
     >
       {/* Logo com hover/touch */}
-      <div className="relative w-full">
+      <div
+        className="relative w-full"
+        onMouseEnter={() => setShowBalloon(true)}
+        onMouseLeave={() => setShowBalloon(false)}
+      >
         <div
           className="w-full flex items-center justify-center p-6 rounded-xl bg-muted/50 cursor-pointer border border-border/30 hover:border-primary/40 transition-all duration-300 min-h-[120px]"
-          onMouseEnter={() => setShowBalloon(true)}
-          onMouseLeave={() => setShowBalloon(false)}
           onClick={() => setShowBalloon(!showBalloon)}
         >
           <img
