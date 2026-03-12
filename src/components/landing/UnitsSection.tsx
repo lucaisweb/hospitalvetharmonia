@@ -89,7 +89,7 @@ const UnitsSection = () => {
 
                 <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{unit.address}</p>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   <a href={`tel:${unit.phone.replace(/\D/g, '')}`} className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:underline">
                     <Phone className="w-4 h-4" />
                     {unit.phone}
@@ -98,7 +98,7 @@ const UnitsSection = () => {
                     href={unit.mapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary/80 text-sm hover:text-primary hover:underline transition-colors"
+                    className="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 bg-primary text-primary-foreground font-semibold text-sm rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-lg"
                   >
                     <Navigation className="w-4 h-4" />
                     Como chegar
