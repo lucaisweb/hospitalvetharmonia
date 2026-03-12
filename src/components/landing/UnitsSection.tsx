@@ -4,6 +4,7 @@ import recifeSkyline from "@/assets/recife-skyline.png";
 import recifeBg from "@/assets/recife-bg.png";
 import unidadeCasaForte from "@/assets/unidade-casa-forte.png";
 import unidadeMadalena from "@/assets/unidade-madalena.png";
+import unidadeBoaViagem from "@/assets/unidade-boa-viagem.png";
 
 const units = [
   {
