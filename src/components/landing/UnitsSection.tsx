@@ -71,17 +71,25 @@ const UnitsSection = () => {
             >
               {/* Satellite map embed */}
               <div className="relative w-full h-48 bg-muted">
-                <iframe
-                  src={unit.mapEmbed + "&maptype=satellite"}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`Mapa ${unit.name}`}
-                  className="w-full h-full"
-                />
+                {unit.image ? (
+                  <img
+                    src={unit.image}
+                    alt={`Unidade ${unit.name}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <iframe
+                    src={unit.mapEmbed + "&maptype=satellite"}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Mapa ${unit.name}`}
+                    className="w-full h-full"
+                  />
+                )}
               </div>
 
               <div className="p-6">
