@@ -1,24 +1,25 @@
 interface WaveDividerProps {
-  from?: string;
-  to?: string;
+  fillColor?: string;
+  bgColor?: string;
   flip?: boolean;
 }
 
-const WaveDivider = ({ from = "hsl(var(--background))", to = "hsl(var(--background))", flip = false }: WaveDividerProps) => {
+const WaveDivider = ({ fillColor = "hsl(var(--background))", bgColor = "transparent", flip = false }: WaveDividerProps) => {
   return (
-    <div className={`relative w-full overflow-hidden leading-[0] ${flip ? "rotate-180" : ""}`} style={{ marginTop: "-1px", marginBottom: "-1px" }}>
+    <div
+      className={`relative w-full overflow-hidden leading-[0] ${flip ? "rotate-180" : ""}`}
+      style={{ backgroundColor: bgColor, marginTop: "-2px", marginBottom: "-2px" }}
+    >
       <svg
-        viewBox="0 0 1440 120"
+        viewBox="0 0 1440 100"
         preserveAspectRatio="none"
-        className="w-full h-[60px] md:h-[80px] lg:h-[100px] block"
+        className="w-full h-[50px] md:h-[70px] lg:h-[90px] block"
       >
         <path
-          d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z"
-          fill={to}
+          d="M0,40 C180,90 360,0 540,50 C720,100 900,10 1080,50 C1200,75 1350,20 1440,40 L1440,100 L0,100 Z"
+          fill={fillColor}
         />
-        <rect width="1440" height="120" fill={from} style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }} opacity="0" />
       </svg>
-      <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${from}, transparent 30%)` }} />
     </div>
   );
 };
