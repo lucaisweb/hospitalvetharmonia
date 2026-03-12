@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Navigation } from "lucide-react";
+import recifeSkyline from "@/assets/recife-skyline.png";
 
 const units = [
   {
@@ -27,7 +28,14 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="py-24" style={{ background: "var(--warm-gradient)" }}>
+    <section className="relative py-24 overflow-hidden" style={{ background: "var(--warm-gradient)" }}>
+      {/* Marca d'água - Skyline de Recife */}
+      <img
+        src={recifeSkyline}
+        alt=""
+        className="absolute bottom-0 left-0 right-0 w-full object-contain pointer-events-none select-none"
+        style={{ opacity: 0.06 }}
+      />
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
