@@ -2,12 +2,14 @@ import { motion } from "framer-motion";
 import { MapPin, Phone, Navigation } from "lucide-react";
 import recifeSkyline from "@/assets/recife-skyline.png";
 import recifeBg from "@/assets/recife-bg.png";
+import unidadeCasaForte from "@/assets/unidade-casa-forte.png";
 
 const units = [
   {
     name: "Casa Forte",
     address: "Estrada do Encanamento, Nº 585, Casa Forte, Recife – PE",
     phone: "(81) 3333-0001",
+    image: unidadeCasaForte,
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.9267!3d-8.0381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDInMTcuMiJTIDM0wrA1NScyNC4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000000",
     mapsLink: "https://www.google.com/maps/search/Estrada+do+Encanamento+585+Casa+Forte+Recife+PE",
   },
@@ -69,17 +71,25 @@ const UnitsSection = () => {
             >
               {/* Satellite map embed */}
               <div className="relative w-full h-48 bg-muted">
-                <iframe
-                  src={unit.mapEmbed + "&maptype=satellite"}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`Mapa ${unit.name}`}
-                  className="w-full h-full"
-                />
+                {unit.image ? (
+                  <img
+                    src={unit.image}
+                    alt={`Unidade ${unit.name}`}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <iframe
+                    src={unit.mapEmbed + "&maptype=satellite"}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Mapa ${unit.name}`}
+                    className="w-full h-full"
+                  />
+                )}
               </div>
 
               <div className="p-6">
