@@ -40,7 +40,7 @@ const UnitsSection = () => {
       />
       <div className="absolute inset-0 bg-background/60" />
 
-      {/* Wave overlay with hero gradient - the wave shape reveals the image below */}
+      {/* Wave: hero green on top, wave edge reveals the bg image below */}
       <div className="relative w-full overflow-hidden leading-[0] z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,17 +48,10 @@ const UnitsSection = () => {
           preserveAspectRatio="none"
           className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
         >
-          {/* Top rectangle with hero color */}
-          <rect width="1440" height="100" fill="hsl(155, 83%, 30%)" />
-          {/* Wave cutout revealing the section below */}
+          {/* Hero green fills from top down to wave curve */}
           <path
-            d="M0,40 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1320,70 1400,40 1440,30 L1440,100 L0,100 Z"
-            fill="transparent"
-          />
-          <path
-            d="M0,40 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1320,70 1400,40 1440,30 L1440,100 L0,100 Z"
-            className="fill-background"
-            opacity="0.6"
+            d="M0,0 L1440,0 L1440,30 C1400,40 1320,70 1200,50 C1000,10 800,90 600,50 C400,10 200,90 0,40 Z"
+            fill="hsl(155, 83%, 30%)"
           />
         </svg>
       </div>
