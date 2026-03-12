@@ -1,10 +1,19 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Phone, Calendar } from "lucide-react";
+import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: "var(--hero-gradient)" }}>
+      {/* Marca d'água */}
+      <img
+        src={simboloHarmonia}
+        alt=""
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] object-contain pointer-events-none select-none brightness-0 invert"
+        style={{ opacity: 0.07 }}
+      />
+
       {/* Decorative circles */}
       <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary-foreground/5 blur-3xl" />
       <div className="absolute bottom-20 left-10 w-96 h-96 rounded-full bg-primary-foreground/5 blur-3xl" />
