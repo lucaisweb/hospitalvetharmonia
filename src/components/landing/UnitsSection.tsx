@@ -29,7 +29,7 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative pt-32 pb-24 -mt-16 overflow-hidden">
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
