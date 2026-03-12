@@ -44,12 +44,24 @@ const SpecialtiesSection = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-sm transition-all duration-300"
+              className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-sm transition-all duration-300 cursor-pointer"
             >
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                 <spec.icon className="w-6 h-6 text-primary" />
               </div>
               <span className="text-sm font-medium text-card-foreground text-center">{spec.name}</span>
+              
+              {/* Botão de agendamento ao hover/click */}
+              <div className="absolute inset-0 flex items-center justify-center bg-card/95 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <a
+                  href="https://wa.me/558131267555?text=Olá! Gostaria de agendar uma consulta de ${spec.name}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2.5 bg-primary text-primary-foreground font-semibold text-sm rounded-lg shadow-md hover:bg-primary/90 transition-all duration-300"
+                >
+                  Agendar
+                </a>
+              </div>
             </motion.div>
           ))}
         </div>
