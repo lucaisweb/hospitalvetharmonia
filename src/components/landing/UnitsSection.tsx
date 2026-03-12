@@ -33,26 +33,36 @@ const units = [
 const UnitsSection = () => {
   return (
     <section className="relative pt-0 pb-24 overflow-hidden">
-      {/* Wave transition from hero */}
-      <div className="w-full overflow-hidden leading-[0]" style={{ background: "var(--hero-gradient)" }}>
+      {/* Background image - covers full section including wave area */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${recifeBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/60" />
+
+      {/* Wave overlay with hero gradient - the wave shape reveals the image below */}
+      <div className="relative w-full overflow-hidden leading-[0] z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 100"
           preserveAspectRatio="none"
           className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
         >
+          {/* Top rectangle with hero color */}
+          <rect width="1440" height="100" fill="hsl(155, 83%, 30%)" />
+          {/* Wave cutout revealing the section below */}
           <path
-            d="M0,0 C200,80 400,20 600,50 C800,80 1000,10 1200,40 C1320,55 1400,30 1440,20 L1440,100 L0,100 Z"
-            fill="hsl(40, 33%, 97%)"
+            d="M0,40 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1320,70 1400,40 1440,30 L1440,100 L0,100 Z"
+            fill="transparent"
+          />
+          <path
+            d="M0,40 C200,90 400,10 600,50 C800,90 1000,10 1200,50 C1320,70 1400,40 1440,30 L1440,100 L0,100 Z"
+            className="fill-background"
+            opacity="0.6"
           />
         </svg>
       </div>
-      {/* Background image */}
-      <div
-        className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${recifeBg})` }}
-      />
-      <div className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-background/60" />
+
       {/* Marca d'água - Skyline de Recife */}
       <img
         src={recifeSkyline}
