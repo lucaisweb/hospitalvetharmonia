@@ -4,6 +4,7 @@ import recifeSkyline from "@/assets/recife-skyline.png";
 import recifeBg from "@/assets/recife-bg.png";
 import unidadeCasaForte from "@/assets/unidade-casa-forte.png";
 import unidadeMadalena from "@/assets/unidade-madalena.png";
+import unidadeBoaViagem from "@/assets/unidade-boa-viagem.png";
 
 const units = [
   {
@@ -26,6 +27,7 @@ const units = [
     name: "Boa Viagem",
     address: "Av. Eng. Domingos Ferreira, 3628, Boa Viagem, Recife – PE",
     phone: "(81) 3333-0003",
+    image: unidadeBoaViagem,
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.8867!3d-8.1181!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDcnMDUuMiJTIDM0wrA1MycxMi4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000002",
     mapsLink: "https://www.google.com/maps/search/Av+Eng+Domingos+Ferreira+3628+Boa+Viagem+Recife+PE",
   },
