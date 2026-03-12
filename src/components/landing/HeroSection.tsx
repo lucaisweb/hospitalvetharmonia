@@ -11,8 +11,8 @@ const HeroSection = () => {
         src={simboloHarmonia}
         alt=""
         className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[600px] h-[600px] object-contain pointer-events-none select-none brightness-0 invert"
-        style={{ opacity: 0.07 }}
-      />
+        style={{ opacity: 0.07 }} />
+      
 
       {/* Decorative circles */}
       <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-primary-foreground/5 blur-3xl" />
@@ -23,8 +23,8 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+            transition={{ duration: 0.8 }}>
+            
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary-foreground/10 text-primary-foreground/80 text-sm font-medium mb-6 backdrop-blur-sm">
               🐾 Atendimento 24 horas • Recife, PE
             </span>
@@ -34,10 +34,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6"
-          >
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
+            
             Há 30 anos referência em{" "}
-            <span className="italic text-accent">Medicina Veterinária</span>{" "}
+            <span className="italic text-green-300">Medicina Veterinária</span>{" "}
             no Nordeste.
           </motion.h1>
 
@@ -45,8 +45,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed"
-          >
+            className="text-lg md:text-xl text-primary-foreground/75 mb-10 max-w-2xl leading-relaxed">
+            
             Cuidado, respeito e excelência em cada atendimento. 
             Atendimento 24h, especialistas renomados e infraestrutura completa para cuidar de quem você ama.
           </motion.p>
@@ -55,8 +55,8 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4"
-          >
+            className="flex flex-col sm:flex-row gap-4">
+            
             <Button variant="hero" size="lg" className="text-base px-8 py-6 rounded-full">
               <Phone className="mr-2 h-5 w-5" />
               Falar com Emergência 24h
@@ -75,8 +75,8 @@ const HeroSection = () => {
           <path d="M0 120L60 105C120 90 240 60 360 52.5C480 45 600 60 720 67.5C840 75 960 75 1080 67.5C1200 60 1320 45 1380 37.5L1440 30V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="hsl(40 33% 97%)" />
         </svg>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;
