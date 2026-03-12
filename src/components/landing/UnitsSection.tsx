@@ -32,13 +32,27 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="relative pt-32 pb-24 -mt-24 overflow-hidden">
+    <section className="relative pt-0 pb-24 overflow-hidden">
+      {/* Wave transition from hero */}
+      <div className="w-full overflow-hidden leading-[0]" style={{ background: "var(--hero-gradient)" }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 100"
+          preserveAspectRatio="none"
+          className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
+        >
+          <path
+            d="M0,0 C200,80 400,20 600,50 C800,80 1000,10 1200,40 C1320,55 1400,30 1440,20 L1440,100 L0,100 Z"
+            fill="hsl(40, 33%, 97%)"
+          />
+        </svg>
+      </div>
       {/* Background image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${recifeBg})` }}
       />
-      <div className="absolute inset-0 bg-background/60" />
+      <div className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-background/60" />
       {/* Marca d'água - Skyline de Recife */}
       <img
         src={recifeSkyline}
@@ -46,7 +60,7 @@ const UnitsSection = () => {
         className="absolute bottom-0 left-0 right-0 w-full object-contain pointer-events-none select-none"
         style={{ opacity: 0.06 }}
       />
-      <div className="relative z-10 container mx-auto px-6">
+      <div className="relative z-10 container mx-auto px-6 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

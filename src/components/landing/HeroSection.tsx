@@ -65,26 +65,6 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Bottom wave - subtle curve that blends into next section */}
-      <div className="absolute -bottom-px left-0 right-0 w-full overflow-hidden leading-[0] z-20">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 60"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[30px] md:h-[45px] lg:h-[60px]"
-        >
-          <path
-            d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60 Z"
-            fill="hsl(155, 83%, 30%)"
-            opacity="0.3"
-          />
-          <path
-            d="M0,40 C480,60 960,20 1440,40 L1440,60 L0,60 Z"
-            fill="hsl(155, 83%, 25%)"
-            opacity="0.2"
-          />
-        </svg>
-      </div>
     </section>);
 
 };
