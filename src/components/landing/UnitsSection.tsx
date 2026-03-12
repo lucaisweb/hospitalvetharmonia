@@ -68,7 +68,7 @@ const UnitsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="bg-card rounded-2xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(34,139,34,0.15)] hover:shadow-[0_8px_30px_-4px_rgba(34,139,34,0.25)] transition-all duration-300 border-2 border-primary hover:-translate-y-1"
+              className="bg-card rounded-2xl overflow-hidden shadow-[0_4px_20px_-4px_rgba(34,139,34,0.15)] hover:shadow-[0_8px_30px_-4px_rgba(34,139,34,0.25)] transition-all duration-300 border-[3px] border-primary hover:-translate-y-1"
             >
               {/* Satellite map embed */}
               <div className="relative w-full h-48 bg-muted">
