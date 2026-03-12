@@ -69,13 +69,18 @@ const HeroSection = () => {
       <div className="absolute -bottom-px left-0 right-0 w-full overflow-hidden leading-[0] z-20">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 150"
+          viewBox="0 0 1440 80"
           preserveAspectRatio="none"
-          className="relative block w-full h-[80px] md:h-[100px] lg:h-[150px]"
+          className="relative block w-full h-[40px] md:h-[60px] lg:h-[80px]"
         >
           <path
-            d="M0,64 C180,120 360,20 540,64 C720,108 900,20 1080,64 C1260,108 1350,40 1440,64 L1440,150 L0,150 Z"
-            fill="hsl(40, 33%, 97%)"
+            d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"
+            fill="transparent"
+            stroke="none"
+          />
+          <path
+            d="M0,40 C360,80 720,0 1080,40 C1260,60 1380,50 1440,40 L1440,80 L0,80 Z"
+            className="fill-background/0"
           />
         </svg>
       </div>
