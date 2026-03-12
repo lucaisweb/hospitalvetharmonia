@@ -30,8 +30,8 @@ const ValueProps = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16">
           
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Cuidado completo
-em um só lugar!
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Cuidado completo em um só lugar!
+
             <span className="text-gradient-primary">Harmonia</span>?
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
