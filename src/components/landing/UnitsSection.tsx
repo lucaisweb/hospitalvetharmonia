@@ -33,7 +33,7 @@ const UnitsSection = () => {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${recifeBg})`, opacity: 0.5 }}
+        style={{ backgroundImage: `url(${recifeBg})`, opacity: 0.3 }}
       />
       <div className="absolute inset-0 bg-background/60" />
       {/* Marca d'água - Skyline de Recife */}
