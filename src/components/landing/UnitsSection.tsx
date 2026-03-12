@@ -9,6 +9,7 @@ const units = [
     name: "Casa Forte",
     address: "Estrada do Encanamento, Nº 585, Casa Forte, Recife – PE",
     phone: "(81) 3333-0001",
+    image: unidadeCasaForte,
     mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1976.5!2d-34.9267!3d-8.0381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOMKwMDInMTcuMiJTIDM0wrA1NScyNC4xIlc!5e0!3m2!1spt-BR!2sbr!4v1700000000000",
     mapsLink: "https://www.google.com/maps/search/Estrada+do+Encanamento+585+Casa+Forte+Recife+PE",
   },
