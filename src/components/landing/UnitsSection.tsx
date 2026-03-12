@@ -33,26 +33,29 @@ const units = [
 const UnitsSection = () => {
   return (
     <section className="relative pt-0 pb-24 overflow-hidden">
-      {/* Wave transition from hero */}
-      <div className="w-full overflow-hidden leading-[0]" style={{ background: "var(--hero-gradient)" }}>
+      {/* Background image - covers full section including wave area */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${recifeBg})` }}
+      />
+      <div className="absolute inset-0 bg-background/60" />
+
+      {/* Wave: hero green on top, wave edge reveals the bg image below */}
+      <div className="relative w-full overflow-hidden leading-[0] z-10">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 100"
           preserveAspectRatio="none"
           className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
         >
+          {/* Hero green fills from top down to wave curve */}
           <path
-            d="M0,0 C200,80 400,20 600,50 C800,80 1000,10 1200,40 C1320,55 1400,30 1440,20 L1440,100 L0,100 Z"
-            fill="hsl(40, 33%, 97%)"
+            d="M0,0 L1440,0 L1440,30 C1400,40 1320,70 1200,50 C1000,10 800,90 600,50 C400,10 200,90 0,40 Z"
+            fill="hsl(155, 83%, 30%)"
           />
         </svg>
       </div>
-      {/* Background image */}
-      <div
-        className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${recifeBg})` }}
-      />
-      <div className="absolute inset-0 top-[50px] md:top-[70px] lg:top-[100px] bg-background/60" />
+
       {/* Marca d'água - Skyline de Recife */}
       <img
         src={recifeSkyline}
