@@ -48,18 +48,12 @@ const PillarCard = ({ pillar, i }: { pillar: typeof pillars[0]; i: number }) => 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay: i * 0.15 }}
-      className="bg-card rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 border border-border/50"
+      className="bg-card rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 border border-border/50 flex flex-col items-center justify-center"
     >
-      <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-        <pillar.icon className="w-7 h-7 text-primary" />
-      </div>
-      <h3 className="text-xl font-bold text-card-foreground mb-3">{pillar.title}</h3>
-      <p className="text-muted-foreground leading-relaxed mb-6">{pillar.description}</p>
-
       {/* Logo com hover/touch */}
-      <div className="relative">
+      <div className="relative w-full">
         <div
-          className="w-full flex items-center justify-center p-4 rounded-xl bg-muted/50 cursor-pointer border border-border/30 hover:border-primary/40 transition-all duration-300"
+          className="w-full flex items-center justify-center p-6 rounded-xl bg-muted/50 cursor-pointer border border-border/30 hover:border-primary/40 transition-all duration-300 min-h-[120px]"
           onMouseEnter={() => setShowBalloon(true)}
           onMouseLeave={() => setShowBalloon(false)}
           onClick={() => setShowBalloon(!showBalloon)}
@@ -67,7 +61,7 @@ const PillarCard = ({ pillar, i }: { pillar: typeof pillars[0]; i: number }) => 
           <img
             src={pillar.logo}
             alt={pillar.logoAlt}
-            className="h-16 w-auto object-contain"
+            className="h-20 w-auto object-contain"
           />
         </div>
 
@@ -81,7 +75,6 @@ const PillarCard = ({ pillar, i }: { pillar: typeof pillars[0]; i: number }) => 
               transition={{ duration: 0.2 }}
               className="absolute left-0 right-0 top-full mt-3 z-20 bg-popover border border-border rounded-xl p-4 shadow-lg"
             >
-              {/* Seta do balão */}
               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-popover border-l border-t border-border" />
               <p className="text-popover-foreground text-sm leading-relaxed mb-4 relative z-10">
                 {pillar.balloon}
