@@ -2,6 +2,7 @@ import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import ServicesSection from "@/components/landing/ServicesSection";
 import ValueProps from "@/components/landing/ValueProps";
+import SpecialtiesSection from "@/components/landing/SpecialtiesSection";
 import UnitsSection from "@/components/landing/UnitsSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import Footer from "@/components/landing/Footer";
@@ -30,6 +31,7 @@ const Index = () => {
         <div id="sobre">
           <ValueProps />
         </div>
+        <SpecialtiesSection />
         <div id="servicos">
           <ServicesSection />
         </div>
