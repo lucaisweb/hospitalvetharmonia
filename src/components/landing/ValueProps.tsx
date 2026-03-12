@@ -103,7 +103,7 @@ const PillarCard = ({ pillar, i }: { pillar: typeof pillars[0]; i: number }) => 
 
 const ValueProps = () => {
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
+    <section className="pt-24 pb-40 bg-background relative overflow-visible">
       <img
         src={simboloHarmonia}
         alt=""
