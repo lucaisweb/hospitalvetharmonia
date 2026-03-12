@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Navigation } from "lucide-react";
 import recifeSkyline from "@/assets/recife-skyline.png";
+import recifeBg from "@/assets/recife-bg.png";
 
 const units = [
   {
@@ -28,7 +29,13 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="relative py-24 overflow-hidden" style={{ background: "var(--warm-gradient)" }}>
+    <section className="relative py-24 overflow-hidden">
+      {/* Background image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${recifeBg})`, opacity: 0.25 }}
+      />
+      <div className="absolute inset-0 bg-background/60" />
       {/* Marca d'água - Skyline de Recife */}
       <img
         src={recifeSkyline}
