@@ -36,7 +36,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
             
-            Há 30 anos referência em{" "}
+            Há mais de 30 anos referência em{" "}
             <span className="italic text-green-300">Medicina Veterinária</span>{" "}
             no Nordeste.
           </motion.h1>
