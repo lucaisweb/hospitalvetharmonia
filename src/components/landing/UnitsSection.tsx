@@ -51,7 +51,7 @@ const UnitsSection = () => {
           {/* Hero green fills from top down to wave curve */}
           <path
             d="M0,0 L1440,0 L1440,50 Q1080,90 720,50 Q360,10 0,50 Z"
-            fill="hsl(var(--primary))"
+            fill="hsl(155, 83%, 22%)"
           />
         </svg>
       </div>
