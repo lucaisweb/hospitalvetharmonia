@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Phone, Navigation } from "lucide-react";
 import recifeSkyline from "@/assets/recife-skyline.png";
+import recifeAerial from "@/assets/recife-aerial.png";
 import recifeBg from "@/assets/recife-bg.png";
 import unidadeCasaForte from "@/assets/unidade-casa-forte.png";
 import unidadeMadalena from "@/assets/unidade-madalena.png";
