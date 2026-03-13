@@ -37,9 +37,8 @@ const UnitsSection = () => {
       {/* Background image - covers full section including wave area */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${recifeBg})` }}
+        style={{ backgroundImage: `url(${recifeAerial})`, opacity: 0.35 }}
       />
-      <div className="absolute inset-0 bg-background/60" />
 
       {/* Wave: hero green on top, wave edge reveals the bg image below */}
       <div className="relative w-full overflow-hidden leading-[0] z-10">
