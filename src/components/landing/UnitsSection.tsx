@@ -33,12 +33,8 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="relative pt-0 pb-24 overflow-hidden">
-      {/* Background image - covers full section including wave area */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${recifeAerial})`, opacity: 0.35 }}
-      />
+    <section className="relative pt-0 pb-24 overflow-hidden" style={{ backgroundColor: "hsl(80, 25%, 85%)" }}>
+
 
       {/* Wave: hero green on top, wave edge reveals the bg image below */}
       <div className="relative w-full overflow-hidden leading-[0] z-10">
