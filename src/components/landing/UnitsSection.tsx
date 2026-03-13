@@ -48,10 +48,15 @@ const UnitsSection = () => {
           preserveAspectRatio="none"
           className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
         >
-          {/* Hero green fills from top down to wave curve */}
+          <defs>
+            <linearGradient id="waveGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="hsl(155, 83%, 30%)" />
+              <stop offset="100%" stopColor="hsl(160, 85%, 24%)" />
+            </linearGradient>
+          </defs>
           <path
             d="M0,0 L1440,0 L1440,50 Q1080,90 720,50 Q360,10 0,50 Z"
-            fill="hsl(160, 85%, 24%)"
+            fill="url(#waveGradient)"
           />
         </svg>
       </div>
