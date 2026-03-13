@@ -122,7 +122,7 @@ const ValueProps = () => {
             Cuidado completo em um só lugar!
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-
+            O Hospital Veterinário Harmonia conta com uma estrutura completa para realização de diagnósticos precisos.
           </p>
         </motion.div>
 
