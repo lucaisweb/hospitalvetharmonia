@@ -107,10 +107,10 @@ const ValueProps = () => {
       <img
         src={simboloHarmonia}
         alt=""
-        className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] object-contain pointer-events-none select-none"
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] object-contain pointer-events-none select-none z-0"
         style={{ opacity: 0.07, filter: "brightness(0) saturate(100%) invert(38%) sepia(91%) saturate(487%) hue-rotate(101deg) brightness(95%) contrast(92%)" }} />
       
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
