@@ -51,13 +51,6 @@ const UnitsSection = () => {
         </svg>
       </div>
 
-      {/* Marca d'água - Skyline de Recife */}
-      <img
-        src={recifeSkyline}
-        alt=""
-        className="absolute bottom-0 left-0 right-0 w-full object-contain pointer-events-none select-none"
-        style={{ opacity: 0.06 }}
-      />
       <div className="relative z-10 container mx-auto px-6 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
