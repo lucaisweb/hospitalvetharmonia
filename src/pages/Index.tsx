@@ -6,6 +6,7 @@ import SpecialtiesSection from "@/components/landing/SpecialtiesSection";
 import UnitsSection from "@/components/landing/UnitsSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
 import Footer from "@/components/landing/Footer";
+import PrideSection from "@/components/landing/PrideSection";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const Index = () => {
@@ -34,6 +35,7 @@ const Index = () => {
           <ServicesSection />
         </div>
         <TestimonialsSection />
+        <PrideSection />
         <Footer />
       </div>
     </div>
