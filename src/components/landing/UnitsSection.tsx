@@ -33,23 +33,7 @@ const units = [
 
 const UnitsSection = () => {
   return (
-    <section className="relative pt-0 pb-24 overflow-hidden" style={{ backgroundColor: "hsl(80, 25%, 85%)" }}>
-
-
-      {/* Wave: hero green on top, wave edge reveals the bg image below */}
-      <div className="relative w-full overflow-hidden leading-[0] z-10">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1440 100"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[50px] md:h-[70px] lg:h-[100px]"
-        >
-          <path
-            d="M0,0 L1440,0 L1440,50 Q1080,90 720,50 Q360,10 0,50 Z"
-            fill="hsl(160, 56%, 35%)"
-          />
-        </svg>
-      </div>
+    <section className="relative pt-16 pb-24 overflow-hidden" style={{ backgroundColor: "hsl(80, 25%, 85%)" }}>
 
       <div className="relative z-10 container mx-auto px-6 pt-16">
         <motion.div
