@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import seloPernambucano from "@/assets/selo-pernambucano.png";
+import { PrideBadge } from "@/components/ui/pride-badge";
 
 const PrideSection = () => {
   return (
@@ -24,18 +25,19 @@ const PrideSection = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center text-center gap-8"
         >
-          <motion.img
-            src={seloPernambucano}
-            alt="Pernambucano com Orgulho - Hospital Veterinário Harmonia"
-            className="w-64 md:w-72 lg:w-80 h-auto object-contain drop-shadow-[0_0_50px_hsla(43,60%,50%,0.25)]"
-            loading="lazy"
-            width={1024}
-            height={1024}
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-          />
+            className="drop-shadow-[0_0_50px_hsla(43,60%,50%,0.25)]"
+          >
+            <PrideBadge
+              imageSrc={seloPernambucano}
+              alt="Pernambucano com Orgulho - Hospital Veterinário Harmonia"
+              size={380}
+            />
+          </motion.div>
           <motion.div
             className="max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
