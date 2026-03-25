@@ -27,7 +27,7 @@ const PrideSection = () => {
           <motion.img
             src={seloPernambucano}
             alt="Pernambucano com Orgulho - Hospital Veterinário Harmonia"
-            className="w-64 md:w-72 lg:w-80 h-auto object-contain drop-shadow-[0_0_50px_hsla(43,60%,50%,0.25)]"
+            className="w-64 md:w-72 lg:w-80 h-auto object-contain drop-shadow-[0_0_50px_hsla(43,60%,50%,0.25)] rounded-3xl"
             loading="lazy"
             width={1024}
             height={1024}
