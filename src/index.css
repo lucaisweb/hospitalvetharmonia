@@ -77,3 +77,12 @@
     background-clip: text;
   }
 }
+
+@keyframes star-btn {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { StarButton } from "@/components/ui/star-button";
 
 const specialties = [
   "Aplicação de Microchip",
