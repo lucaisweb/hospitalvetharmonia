@@ -57,7 +57,7 @@ const PillarCard = ({ pillar, i }: {pillar: typeof pillars[0];i: number;}) => {
         onMouseLeave={() => setShowBalloon(false)}>
         
         <div
-          className="w-full flex items-center justify-center p-6 rounded-xl bg-muted/50 cursor-pointer border border-border/30 hover:border-primary/40 transition-all duration-300 min-h-[120px]"
+          className="w-full flex items-center justify-center p-6 rounded-xl bg-white cursor-pointer border border-primary/40 hover:border-primary transition-all duration-300 min-h-[120px]"
           onClick={() => setShowBalloon(!showBalloon)}>
           
           <img
