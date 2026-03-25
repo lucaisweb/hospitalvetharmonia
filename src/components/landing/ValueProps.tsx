@@ -4,7 +4,7 @@ import { Clock, Microscope, Heart } from "lucide-react";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 import logoHarmonia from "@/assets/logo-symbol.png";
 import logoInnova from "@/assets/logo-innova.png";
-import logoNeolab from "@/assets/logo-neolab.png";
+import logoNeolab from "@/assets/neolab-logo.png";
 
 const pillars = [
 {
