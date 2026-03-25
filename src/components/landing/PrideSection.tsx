@@ -44,7 +44,7 @@ const PrideSection = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: "hsl(43, 60%, 75%)" }}>
-              Nascemos em Pernambuco, crescemos pelo Brasil
+              Nascemos em Pernambuco, e nos tornamos referência em medicina veterinária no Brasil.
             </h2>
             <p className="text-base md:text-lg leading-relaxed" style={{ color: "hsl(160, 15%, 75%)" }}>
               Há mais de 30 anos somos referência em medicina veterinária de alta complexidade.
