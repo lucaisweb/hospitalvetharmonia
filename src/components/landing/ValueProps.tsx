@@ -17,15 +17,6 @@ const pillars = [
   whatsappMsg: "Olá! Gostaria de saber mais sobre a infraestrutura 24h do Hospital Harmonia."
 },
 {
-  icon: Microscope,
-  title: "Pioneirismo Técnico",
-  description: "Liderança no Nordeste em procedimentos avançados, como medicina regenerativa (células-tronco) e cirurgias complexas.",
-  logo: logoInnova,
-  logoAlt: "Innova Imagem Veterinária",
-  balloon: "A Innova Imagem Veterinária é referência em diagnóstico por imagem avançado, oferecendo exames de alta precisão como tomografia, ressonância e ultrassonografia.",
-  whatsappMsg: "Olá! Gostaria de saber mais sobre os serviços da Innova Imagem Veterinária."
-},
-{
   icon: Heart,
   title: "Dengoterapia",
   description: "Não tratamos apenas o sintoma, cuidamos do bem-estar emocional do pet com protocolos de atendimento gentil.",
@@ -33,6 +24,15 @@ const pillars = [
   logoAlt: "Neolab",
   balloon: "O Neolab é o laboratório de análises clínicas veterinárias que garante resultados rápidos e precisos para o diagnóstico do seu pet.",
   whatsappMsg: "Olá! Gostaria de saber mais sobre os serviços do Neolab."
+},
+{
+  icon: Microscope,
+  title: "Pioneirismo Técnico",
+  description: "Liderança no Nordeste em procedimentos avançados, como medicina regenerativa (células-tronco) e cirurgias complexas.",
+  logo: logoInnova,
+  logoAlt: "Innova Imagem Veterinária",
+  balloon: "A Innova Imagem Veterinária é referência em diagnóstico por imagem avançado, oferecendo exames de alta precisão como tomografia, ressonância e ultrassonografia.",
+  whatsappMsg: "Olá! Gostaria de saber mais sobre os serviços da Innova Imagem Veterinária."
 }];
 
 
