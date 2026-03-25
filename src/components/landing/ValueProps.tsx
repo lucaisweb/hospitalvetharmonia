@@ -63,7 +63,7 @@ const PillarCard = ({ pillar, i }: {pillar: typeof pillars[0];i: number;}) => {
           <img
             src={pillar.logo}
             alt={pillar.logoAlt}
-            className="max-h-28 max-w-[85%] w-auto object-contain" />
+            className="max-h-36 max-w-[90%] w-auto object-contain" />
           
         </div>
 
