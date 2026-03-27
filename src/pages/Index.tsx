@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, motion } from "framer-motion";
+import { LoadingScreen } from "@/components/ui/loading-screen";
 import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import ServicesSection from "@/components/landing/ServicesSection";
@@ -56,6 +57,7 @@ const CursorGlow = () => {
 };
 
 const Index = () => {
+  const [loading, setLoading] = useState(true);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -64,7 +66,9 @@ const Index = () => {
   });
 
   return (
-    <div className="min-h-screen relative">
+    <>
+      <LoadingScreen onComplete={() => setLoading(false)} />
+    <div className="min-h-screen relative" style={{ visibility: loading ? "hidden" : "visible" }}>
       {/* Scroll progress bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[3px] origin-left z-[60]"
@@ -108,6 +112,7 @@ const Index = () => {
 
       <FloatingWhatsApp />
     </div>
+    </>
   );
 };
 

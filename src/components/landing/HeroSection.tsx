@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { Phone, ChevronDown } from "lucide-react";
+import { Phone, ChevronDown, ChevronRight } from "lucide-react";
 import { CountUp } from "@/components/ui/count-up";
 import recifeBg from "@/assets/hero-hvh.png";
 import logoFull from "@/assets/logo-full.png";
@@ -29,18 +29,22 @@ const stats = [
 ];
 
 const marqueeSpecialties = [
-  "Clínica Geral", "Cirurgia", "UTI 24h", "Internação", "Ortopedia",
+  "Clínica Geral", "Cirurgia", "Internação", "Ortopedia",
   "Cardiologia", "Neurologia", "Oncologia", "Dermatologia", "Fisioterapia",
   "Acupuntura", "Oftalmologia", "Diagnóstico por Imagem", "Laboratório Próprio",
-  "Banco de Sangue", "Células-Tronco", "Neonatologia", "Vacinação",
+  "Neonatologia", "Vacinação", "Animais Silvestres", "Emergência 24h",
 ];
 
+const WA_EMERGENCY =
+  "https://wa.me/558131267555?text=Olá!%20Estou%20com%20uma%20EMERGÊNCIA%20e%20preciso%20de%20atendimento%20urgente%20para%20o%20meu%20pet.";
+
 /* ── Magnetic CTA inside Hero ── */
-const HeroCta = ({ href, style: ctaStyle, className, children }: {
+const HeroCta = ({ href, style: ctaStyle, className, children, target }: {
   href: string;
   style?: React.CSSProperties;
   className?: string;
   children: React.ReactNode;
+  target?: string;
 }) => {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
@@ -60,6 +64,8 @@ const HeroCta = ({ href, style: ctaStyle, className, children }: {
     <motion.a
       ref={ref}
       href={href}
+      target={target}
+      rel={target === "_blank" ? "noopener noreferrer" : undefined}
       style={{ x: sx, y: sy, ...ctaStyle }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
@@ -138,86 +144,143 @@ const HeroSection = () => {
             animate="visible"
             className="max-w-2xl"
           >
-            {/* Live badge */}
-            <motion.div variants={itemVariants} className="mb-8">
-              <span
-                className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border text-sm font-medium"
-                style={{
-                  backgroundColor: "hsl(155 83% 30% / 0.14)",
-                  borderColor: "hsl(155 83% 30% / 0.32)",
-                  color: "hsl(155 83% 65%)",
-                }}
-              >
-                <span className="relative flex w-2 h-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full animate-pulse-ring"
-                    style={{ backgroundColor: "hsl(155 83% 50%)" }} />
-                  <span className="relative w-2 h-2 rounded-full"
-                    style={{ backgroundColor: "hsl(155 83% 55%)" }} />
-                </span>
-                Atendimento 24 horas &bull; Recife, PE
-              </span>
-            </motion.div>
+            {/* Glass wrapper — mobile only */}
+            <div className="md:contents">
+              <div className="bg-black/30 backdrop-blur-md rounded-2xl p-5 -mx-1 md:bg-transparent md:backdrop-blur-none md:p-0 md:mx-0 md:rounded-none">
 
-            {/* Headline */}
-            <motion.h1
-              variants={itemVariants}
-              className="font-display font-extrabold tracking-tighter leading-[0.92] text-white mb-6"
-              style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)" }}
-            >
-              Há 30 anos,
-              <br />
-              cuidando de
-              <br />
-              <span style={{ color: "hsl(155 83% 55%)" }}>
-                quem você ama.
-              </span>
-            </motion.h1>
+                {/* Live badge */}
+                <motion.div variants={itemVariants} className="mb-8">
+                  <span
+                    className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border text-sm font-medium"
+                    style={{
+                      backgroundColor: "hsl(155 83% 30% / 0.14)",
+                      borderColor: "hsl(155 83% 30% / 0.32)",
+                      color: "hsl(155 83% 65%)",
+                    }}
+                  >
+                    <span className="relative flex w-2 h-2 flex-shrink-0">
+                      <span
+                        className="absolute inline-flex h-full w-full rounded-full animate-pulse-ring"
+                        style={{ backgroundColor: "hsl(155 83% 50%)" }}
+                      />
+                      <span
+                        className="relative w-2 h-2 rounded-full"
+                        style={{ backgroundColor: "hsl(155 83% 55%)" }}
+                      />
+                    </span>
+                    Atendimento 24 horas &bull; Recife, PE
+                  </span>
+                </motion.div>
 
-            {/* Subtitle */}
-            <motion.p
-              variants={itemVariants}
-              className="text-lg md:text-xl leading-relaxed mb-10 max-w-lg"
-              style={{ color: "rgba(255,255,255,0.52)" }}
-            >
-              Excelência em medicina veterinária com 25+ especialidades,
-              UTI 24h, diagnóstico por imagem e equipe altamente qualificada.
-            </motion.p>
+                {/* Headline */}
+                <motion.h1
+                  variants={itemVariants}
+                  className="font-display font-extrabold tracking-tighter leading-[0.92] text-white mb-6"
+                  style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)" }}
+                >
+                  Há 30 anos,
+                  <br />
+                  cuidando de
+                  <br />
+                  <span style={{ color: "hsl(155 83% 55%)" }}>
+                    quem você ama.
+                  </span>
+                </motion.h1>
 
-            {/* CTAs */}
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <HeroCta
-                href="tel:08131267555"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm"
-                style={{
-                  background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
-                  boxShadow: "0 8px 24px -6px hsla(12, 76%, 56%, 0.6)",
-                }}
-              >
-                <Phone className="w-4 h-4" strokeWidth={2.5} />
-                Emergência 24h
-              </HeroCta>
+                {/* Subtitle */}
+                <motion.p
+                  variants={itemVariants}
+                  className="text-lg md:text-xl leading-relaxed mb-10 max-w-lg"
+                  style={{ color: "rgba(255,255,255,0.52)" }}
+                >
+                  Excelência em medicina veterinária com 25+ especialidades,
+                  diagnóstico por imagem e equipe altamente qualificada.
+                </motion.p>
 
-              <HeroCta
-                href="#especialidades"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-sm border"
-                style={{
-                  borderColor: "rgba(255,255,255,0.18)",
-                  color: "rgba(255,255,255,0.82)",
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                }}
-              >
-                Ver Especialidades
-              </HeroCta>
-            </motion.div>
+                {/* CTAs */}
+                <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+                  {/* Emergência — Desktop → WhatsApp */}
+                  <HeroCta
+                    href={WA_EMERGENCY}
+                    target="_blank"
+                    className="hidden md:inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm"
+                    style={{
+                      background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
+                      boxShadow: "0 8px 24px -6px hsla(12, 76%, 56%, 0.6)",
+                    }}
+                  >
+                    <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.325 0-4.47-.754-6.213-2.032l-.354-.27-3.666 1.228 1.228-3.666-.27-.354A9.935 9.935 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
+                    </svg>
+                    Emergência 24h
+                  </HeroCta>
 
-            {/* Logo */}
-            <motion.div variants={itemVariants} className="mt-12">
-              <img
-                src={logoFull}
-                alt="Hospital Veterinário Harmonia"
-                className="h-7 brightness-0 invert opacity-35"
-              />
-            </motion.div>
+                  {/* Emergência — Mobile → tel */}
+                  <HeroCta
+                    href="tel:558131267555"
+                    className="inline-flex md:hidden items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm"
+                    style={{
+                      background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
+                      boxShadow: "0 8px 24px -6px hsla(12, 76%, 56%, 0.6)",
+                    }}
+                  >
+                    <Phone className="w-4 h-4" strokeWidth={2.5} />
+                    Emergência 24h
+                  </HeroCta>
+
+                  {/* Ver Especialidades — GetStarted style */}
+                  <motion.a
+                    href="#especialidades"
+                    whileHover="hover"
+                    initial="rest"
+                    className="relative overflow-hidden inline-flex items-center justify-center rounded-full text-sm font-semibold"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.16)",
+                      color: "rgba(255,255,255,0.88)",
+                      minWidth: "184px",
+                      height: "48px",
+                      paddingLeft: "24px",
+                      paddingRight: "8px",
+                    }}
+                  >
+                    <motion.span
+                      className="whitespace-nowrap"
+                      style={{ marginRight: "32px" }}
+                      variants={{ rest: { opacity: 1 }, hover: { opacity: 0 } }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      Ver Especialidades
+                    </motion.span>
+                    <motion.i
+                      className="absolute right-1 top-1 bottom-1 rounded-full z-10 grid place-items-center"
+                      style={{
+                        backgroundColor: "hsl(155 83% 28%)",
+                        color: "white",
+                      }}
+                      variants={{
+                        rest: { width: "36px" },
+                        hover: { width: "calc(100% - 8px)" },
+                      }}
+                      transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
+                      <ChevronRight size={16} strokeWidth={2.5} />
+                    </motion.i>
+                  </motion.a>
+                </motion.div>
+
+                {/* Logo */}
+                <motion.div variants={itemVariants} className="mt-12">
+                  <img
+                    src={logoFull}
+                    alt="Hospital Veterinário Harmonia"
+                    className="h-7 brightness-0 invert opacity-35"
+                  />
+                </motion.div>
+
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.div>

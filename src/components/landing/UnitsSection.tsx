@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Navigation, Clock, MapPin } from "lucide-react";
+import { Phone, Navigation, Clock, MapPin, MousePointer2 } from "lucide-react";
 import unidadeCasaForte from "@/assets/unidade-casa-forte.png";
 import unidadeMadalena from "@/assets/unidade-madalena.png";
 import unidadeBoaViagem from "@/assets/unidade-boa-viagem.png";
@@ -182,7 +183,10 @@ const UnitCard = ({ unit }: { unit: typeof units[0] }) => (
   </motion.div>
 );
 
-const UnitsSection = () => (
+const UnitsSection = () => {
+  const [mapActive, setMapActive] = useState(false);
+
+  return (
   <section className="py-28" style={{ backgroundColor: "hsl(40 33% 97%)" }}>
     <div className="max-w-7xl mx-auto px-6 lg:px-10">
       {/* Header */}
@@ -230,19 +234,40 @@ const UnitsSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false, margin: "-60px" }}
         transition={{ type: "spring", stiffness: 70, damping: 18, delay: 0.15 }}
-        className="mt-10 rounded-3xl overflow-hidden border"
+        className="mt-10 rounded-3xl overflow-hidden border relative"
         style={{ height: "360px", borderColor: "hsl(40 20% 85%)", boxShadow: "0 8px 32px -8px rgba(0,0,0,0.1)" }}
+        onMouseLeave={() => setMapActive(false)}
       >
-        <iframe
-          title="Unidades Hospital Veterinário Harmonia"
-          width="100%"
-          height="100%"
-          style={{ border: 0, display: "block" }}
-          loading="lazy"
-          allowFullScreen
-          referrerPolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=hospital+veterin%C3%A1rio+harmonia+recife&output=embed&hl=pt-BR&z=13"
-        />
+        {/* Overlay — bloqueia scroll acidental; some ao clicar */}
+        {!mapActive && (
+          <div
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 cursor-pointer select-none"
+            style={{ backgroundColor: "hsl(170 30% 10% / 0.38)", backdropFilter: "blur(1px)" }}
+            onClick={() => setMapActive(true)}
+          >
+            <div
+              className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-sm font-semibold text-white"
+              style={{ backgroundColor: "hsl(155 83% 28% / 0.92)", boxShadow: "0 4px 16px -4px hsl(155 83% 28% / 0.6)" }}
+            >
+              <MousePointer2 className="w-4 h-4" strokeWidth={2} />
+              Clique para interagir com o mapa
+            </div>
+          </div>
+        )}
+
+        {/* Wrapper com overflow hidden para cortar a barra superior do embed */}
+        <div style={{ position: "relative", height: "calc(100% + 48px)", marginTop: "-48px", overflow: "hidden" }}>
+          <iframe
+            title="Unidades Hospital Veterinário Harmonia"
+            width="100%"
+            height="100%"
+            style={{ border: 0, display: "block" }}
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/d/u/3/embed?mid=1oJt_p_Vol5PtDQE3QNLnOXIfUfhVNHQ&ehbc=2E312F&noprof=1"
+          />
+        </div>
       </motion.div>
 
       {/* Location pills → maps */}
@@ -284,6 +309,7 @@ const UnitsSection = () => (
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default UnitsSection;
