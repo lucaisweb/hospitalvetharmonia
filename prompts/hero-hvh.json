@@ -1,0 +1,10 @@
+{
+  "prompt": "Cinematic wide-angle interior photograph of a premium veterinary hospital in Recife, Brazil. Shot with Sony A7R IV, 24mm f/2.8 lens, ISO 320, natural daylight mixed with warm professional lighting. Scene: a confident Brazilian female veterinarian in dark emerald green scrubs, mid-30s, warm brown skin with visible pore texture and subtle smile lines, crouching gracefully beside a large healthy golden retriever sitting calmly on a pristine white examination table. The dog's fur has individual strand detail, realistic coat texture, and a relaxed tail posture. Behind them, a modern clinic corridor stretches into soft bokeh — clean white and light concrete walls with thin emerald green accent stripe at eye level, sleek stainless steel equipment subtly visible, and large floor-to-ceiling windows on the far right showing a warm tropical afternoon Recife cityscape with Atlantic light. The floor is polished white epoxy with subtle reflections. Foreground slightly defocused, midground sharp. Color palette: warm ivory whites, deep emerald greens, soft warm amber from sunlight. Lighting: afternoon golden-hour sun streaming from right side, creating long directional shadows and rim-lighting the dog's fur and the vet's hair. The overall mood is professional, warm, trustworthy, and premium — conveying 30 years of excellence in veterinary care. Do not add any text, logos, or graphic elements. Photorealistic. Do not beautify faces excessively. No plastic skin. Render individual hair strands. Subtle natural skin imperfections. Real hospital lighting behavior with proper falloff.",
+  "negative_prompt": "no text, no logos, no watermarks, no plastic skin, no CGI look, no beauty filters, no skin smoothing, no airbrushed texture, no stylized realism, no stock photo clichés, no overexposed whites, no flat lighting, no cartoon, no illustration, no 3D render, no anime, no generic hospital stock photo, no fake smiles, no anatomical distortion, no floating objects, no extra limbs",
+  "image_input": [],
+  "api_parameters": {
+    "resolution": "1K",
+    "output_format": "png",
+    "aspect_ratio": "16:9"
+  }
+}
