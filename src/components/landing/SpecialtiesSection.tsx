@@ -108,7 +108,7 @@ const SpecialtiesSection = () => (
             className="font-display font-black tracking-tighter leading-none text-white"
             style={{ fontSize: "clamp(2.2rem, 5vw, 3.4rem)" }}
           >
-            25+ especialidades
+            Todas as especialidades
             <br />
             <span style={{ color: "hsl(155 83% 48%)" }}>em um só lugar</span>
           </h2>
