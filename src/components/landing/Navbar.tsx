@@ -10,6 +10,10 @@ import {
 } from "framer-motion";
 import logoFull from "@/assets/logo-full.png";
 
+const WA_EMERGENCY =
+  "https://wa.me/558131267555?text=Olá!%20Estou%20com%20uma%20EMERGÊNCIA%20e%20preciso%20de%20atendimento%20urgente%20para%20o%20meu%20pet.";
+const TEL_EMERGENCY = "tel:558131267555";
+
 const navLinks = [
   { href: "#sobre", label: "Sobre" },
   { href: "#unidades", label: "Unidades" },
@@ -36,7 +40,9 @@ const MagneticCta = () => {
   return (
     <motion.a
       ref={ref}
-      href="tel:08131267555"
+      href={WA_EMERGENCY}
+      target="_blank"
+      rel="noopener noreferrer"
       style={{
         x: sx,
         y: sy,
@@ -184,7 +190,7 @@ const Navbar = () => {
                   </motion.a>
                 ))}
                 <motion.a
-                  href="tel:08131267555"
+                  href={TEL_EMERGENCY}
                   variants={{
                     hidden: { opacity: 0, x: -16 },
                     visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 200, damping: 20 } },
