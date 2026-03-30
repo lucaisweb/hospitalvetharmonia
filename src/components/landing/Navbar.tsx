@@ -101,17 +101,26 @@ const Navbar = () => {
             className="px-6 flex items-center justify-between"
             style={{ height: isScrolled ? "58px" : "66px", transition: "height 0.3s ease" }}
           >
-            {/* Logo */}
+            {/* Logo + Nome */}
             <motion.a
               href="#"
               animate={{ scale: isScrolled ? 0.93 : 1 }}
               transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
             >
               <img
                 src={logoFull}
                 alt="Hospital Veterinário Harmonia"
                 className="h-8 brightness-0 invert"
               />
+              <div className="leading-tight">
+                <p className="text-[11px] font-semibold tracking-widest uppercase" style={{ color: "hsl(155 83% 55%)" }}>
+                  Hospital Veterinário
+                </p>
+                <p className="text-sm font-bold tracking-tight text-white leading-none">
+                  Harmonia
+                </p>
+              </div>
             </motion.a>
 
             {/* Desktop links */}
