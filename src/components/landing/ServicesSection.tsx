@@ -51,7 +51,7 @@ const services = [
   },
   {
     name: "Diagnóstico por Imagem",
-    desc: "Raio-x, ultrassonografia, tomografia e broncoscopia com laudo imediato.",
+    desc: "Raio-x, ultrassonografia, tomografia e broncoscopia.",
     details:
       "Nosso setor de imagem — a Inova — realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Ecodopolercardiografia, Tomografia, Broncoscopia e Traqueobroncoscopia. Laudos emitidos por médicos veterinários especialistas em diagnóstico por imagem, com resultados disponibilizados em tempo real para agilizar a tomada de decisão clínica.",
     img: imgDiagnostico,
@@ -60,7 +60,7 @@ const services = [
   },
   {
     name: "Cardiologia Veterinária",
-    desc: "Ecocardiograma, eletrocardiograma e acompanhamento de cardiopatias com especialistas dedicados.",
+    desc: "Ecocardiograma, eletrocardiograma e acompanhamento de cardiopatias com equipe especializada.",
     details:
       "Diagnóstico e acompanhamento de cardiopatias com ecocardiografia Doppler colorido, eletrocardiograma, holter e aferição de pressão arterial não invasiva. Atendimento por cardiologista veterinário com ampla experiência em cães e gatos, incluindo elaboração de plano terapêutico e acompanhamento longitudinal para pacientes cardiopatas.",
     img: imgCardiologia,

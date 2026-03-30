@@ -147,7 +147,7 @@ const Footer = () => {
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
                 <span>
-                  Emergência:{" "}
+                  Urgência:{" "}
                   <strong style={{ color: "hsl(155 83% 55%)" }}>24 horas</strong>
                 </span>
               </li>
@@ -168,14 +168,11 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-8 border-t"
+          className="flex items-center justify-center pt-8 border-t"
           style={{ borderColor: "rgba(255,255,255,0.07)" }}
         >
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.28)" }}>
-            © {new Date().getFullYear()} Hospital Veterinário Harmonia. Todos os direitos reservados.
-          </p>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            CFMV · Medicina Veterinária de Alta Complexidade · Recife, PE
+          <p className="text-xs text-center" style={{ color: "rgba(255,255,255,0.28)" }}>
+            © 2026 Hospital Veterinário Harmonia. Todos os direitos reservados.
           </p>
         </div>
       </div>

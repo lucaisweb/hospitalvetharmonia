@@ -33,11 +33,13 @@ const imageRow2 = [
 ];
 
 const allSpecialties = [
-  "Aplicação de Microchip", "Cirurgia", "Clínica Geral", "Inseminação Artificial",
+  "Cirurgia", "Clínica Geral", "Reprodução",
   "Internação", "Vacinas", "Nefrologia",
-  "Dermatologia", "Anestesia", "Oncologia", "Acupuntura", "Fisioterapia",
+  "Dermatologia", "Anestesiologia", "Oncologia", "Acupuntura", "Fisioterapia",
   "Ortopedia", "Cardiologia", "Neurologia", "Oftalmologia", "Animais Silvestres",
-  "Laboratório Próprio", "Diagnóstico por Imagem",
+  "Laboratório Próprio", "Diagnóstico por Imagem", "Endocrinologia",
+  "Pneumologia", "Hematologia", "Nutrologia", "Gastroenterologia",
+  "Terapia Celular (Células-Tronco) · BioCell",
 ];
 
 const WA_URL = "https://api.whatsapp.com/send?phone=558131267555&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20tenho%20interesse%20nos%20servi%C3%A7os%20do%20hospital";
