@@ -19,7 +19,7 @@ export function CountUp({
   formatter,
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: false, margin: "-60px" });
+  const isInView = useInView(ref, { once: false, margin: "0px" });
   const [value, setValue] = useState(0);
   const frameRef = useRef<number>(0);
 

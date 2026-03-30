@@ -51,9 +51,9 @@ const services = [
   },
   {
     name: "Diagnóstico por Imagem",
-    desc: "Raio-x, ultrassonografia, eletrocardiograma e citologia com laudo imediato.",
+    desc: "Raio-x, ultrassonografia, tomografia e broncoscopia com laudo imediato.",
     details:
-      "Nosso setor de imagem — a Innova — realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Citologia Guiada por Imagem e Ecodopolercardiografia. Laudos emitidos por médicos veterinários especialistas em diagnóstico por imagem, com resultados disponibilizados em tempo real para agilizar a tomada de decisão clínica.",
+      "Nosso setor de imagem — a Inova — realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Ecodopolercardiografia, Tomografia, Broncoscopia e Traqueobroncoscopia. Laudos emitidos por médicos veterinários especialistas em diagnóstico por imagem, com resultados disponibilizados em tempo real para agilizar a tomada de decisão clínica.",
     img: imgDiagnostico,
     tag: "Alta Precisão",
     wide: false,

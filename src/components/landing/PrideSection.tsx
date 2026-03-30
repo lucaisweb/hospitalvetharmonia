@@ -7,7 +7,7 @@ import seloPernambucano from "@/assets/selo-pernambucano.png";
 import recifeSkyline from "@/assets/recife-skyline.png";
 
 const achievements = [
-  { icon: Award, label: "30+ Anos", sublabel: "de excelência" },
+  { icon: Award, label: "32+ Anos", sublabel: "de excelência" },
   { icon: ShieldCheck, label: "CRMV-PE", sublabel: "credenciado" },
   { icon: MapPin, label: "3 Unidades", sublabel: "em Recife" },
   { icon: Stethoscope, label: "25+", sublabel: "especialidades" },
@@ -124,7 +124,7 @@ const PrideSection = () => {
               className="text-base leading-relaxed mb-10"
               style={{ color: "hsl(160, 15%, 65%)" }}
             >
-              Há mais de 30 anos somos referência em medicina veterinária de alta
+              Há mais de 32 anos somos referência em medicina veterinária de alta
               complexidade. Orgulho de nossas raízes pernambucanas, levando
               excelência e cuidado para todo o país.
             </motion.p>

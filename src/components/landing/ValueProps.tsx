@@ -28,7 +28,7 @@ const pillars = [
       "Anestesiologia e medicina intensiva dedicadas",
     ],
     stats: [
-      { value: "30+", label: "Anos de história" },
+      { value: "32+", label: "Anos de história" },
       { value: "3", label: "Unidades Recife" },
       { value: "25+", label: "Especialidades" },
     ],
@@ -51,17 +51,17 @@ const pillars = [
   },
   {
     icon: Microscope,
-    title: "Innova — Diagnóstico por Imagem",
-    shortDesc: "Raio-x, ultrassonografia, eletrocardiograma e citologia com laudo imediato.",
+    title: "Inova — Diagnóstico por Imagem",
+    shortDesc: "Raio-x, ultrassonografia, tomografia e broncoscopia com laudo imediato.",
     description:
-      "A Innova Imagem Veterinária realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Citologia Guiada e Ecodopolercardiografia com laudo imediato por especialistas.",
+      "A Inova Imagem Veterinária realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Ecodopolercardiografia, Tomografia, Broncoscopia e Traqueobroncoscopia com laudo imediato por especialistas.",
     logo: logoInnova,
-    logoAlt: "Innova Imagem Veterinária",
+    logoAlt: "Inova Imagem Veterinária",
     tag: "Diagnóstico por Imagem",
-    whatsappMsg: "Olá! Gostaria de saber mais sobre os serviços da Innova Imagem Veterinária.",
+    whatsappMsg: "Olá! Gostaria de saber mais sobre os serviços da Inova Imagem Veterinária.",
     accent: "hsl(200, 75%, 40%)",
     accentLight: "hsl(200, 60%, 97%)",
-    features: ["Raio-x Geral", "Ultrassonografia", "Eletrocardiograma", "Citologia Guiada", "Ecodopolercardiografia"],
+    features: ["Raio-x Geral", "Ultrassonografia", "Eletrocardiograma", "Ecodopolercardiografia", "Tomografia", "Broncoscopia", "Traqueobroncoscopia"],
     wide: false,
   },
 ] as const;

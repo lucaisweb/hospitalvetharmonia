@@ -34,10 +34,10 @@ const imageRow2 = [
 
 const allSpecialties = [
   "Aplicação de Microchip", "Cirurgia", "Clínica Geral", "Inseminação Artificial",
-  "Internação", "Neonatologia", "Obstetrícia", "Vacinas", "Nefrologia",
+  "Internação", "Vacinas", "Nefrologia",
   "Dermatologia", "Anestesia", "Oncologia", "Acupuntura", "Fisioterapia",
   "Ortopedia", "Cardiologia", "Neurologia", "Oftalmologia", "Animais Silvestres",
-  "Nutricionista", "Laboratório Próprio", "Diagnóstico por Imagem",
+  "Laboratório Próprio", "Diagnóstico por Imagem",
 ];
 
 const WA_URL = "https://api.whatsapp.com/send?phone=558131267555&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20tenho%20interesse%20nos%20servi%C3%A7os%20do%20hospital";

@@ -23,7 +23,7 @@ const itemVariants = {
 };
 
 const stats = [
-  { to: 30, suffix: "+", label: "Anos de história" },
+  { to: 32, suffix: "+", label: "Anos de história" },
   { to: 3, suffix: "", label: "Unidades em Recife" },
   { to: 2000, prefix: "+", suffix: "", label: "Pets cuidados/mês" },
 ];
@@ -32,7 +32,7 @@ const marqueeSpecialties = [
   "Clínica Geral", "Cirurgia", "Internação", "Ortopedia",
   "Cardiologia", "Neurologia", "Oncologia", "Dermatologia", "Fisioterapia",
   "Acupuntura", "Oftalmologia", "Diagnóstico por Imagem", "Laboratório Próprio",
-  "Neonatologia", "Vacinação", "Animais Silvestres", "Emergência 24h",
+  "Vacinação", "Animais Silvestres", "Emergência 24h",
 ];
 
 const WA_EMERGENCY =
@@ -178,7 +178,7 @@ const HeroSection = () => {
                   className="font-display font-extrabold tracking-tighter leading-[0.92] text-white mb-6"
                   style={{ fontSize: "clamp(3rem, 6.5vw, 5.5rem)" }}
                 >
-                  Há 30 anos,
+                  Há 32 anos,
                   <br />
                   cuidando de
                   <br />
