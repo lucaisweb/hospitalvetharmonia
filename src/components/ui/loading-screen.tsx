@@ -86,6 +86,27 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             }}
           />
 
+          {/* Nome do hospital */}
+          <motion.div
+            className="text-center mb-8"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15, duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <p
+              className="font-display font-extrabold tracking-tighter leading-none"
+              style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)", color: "rgba(255,255,255,0.92)" }}
+            >
+              Hospital Veterinário
+            </p>
+            <p
+              className="font-display font-extrabold tracking-tighter leading-none"
+              style={{ fontSize: "clamp(2rem, 6vw, 3.5rem)", color: "hsl(155 83% 52%)" }}
+            >
+              Harmonia
+            </p>
+          </motion.div>
+
           {/* Symbol + rings */}
           <motion.div
             className="relative flex items-center justify-center mb-8"
@@ -108,7 +129,7 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
               transition={{ repeat: Infinity, duration: 2.2, ease: "easeOut", delay: 0.45 }}
             />
 
-            {/* Symbol rotating */}
+            {/* Symbol pulsing */}
             <motion.img
               src={simboloHarmonia}
               alt=""
@@ -119,19 +140,19 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
                 filter:
                   "brightness(0) saturate(100%) invert(56%) sepia(60%) saturate(400%) hue-rotate(101deg) brightness(110%)",
               }}
-              animate={{ rotate: [0, 360] }}
-              transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+              animate={{ scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }}
+              transition={{ repeat: Infinity, duration: 2.4, ease: "easeInOut" }}
             />
           </motion.div>
 
-          {/* Logo */}
+          {/* Logo pequena */}
           <motion.img
             src={logoFull}
             alt="Hospital Veterinário Harmonia"
             className="brightness-0 invert mb-10"
-            style={{ height: 22, opacity: 0.55 }}
+            style={{ height: 18, opacity: 0.35 }}
             initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 0.55, y: 0 }}
+            animate={{ opacity: 0.35, y: 0 }}
             transition={{ delay: 0.35, duration: 0.5 }}
           />
 
