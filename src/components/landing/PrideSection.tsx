@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Award, ShieldCheck, MapPin, Stethoscope } from "lucide-react";
 import WordReveal from "@/components/ui/word-reveal";
 import HolographicBadge from "@/components/ui/holographic-badge";
-import seloPernambucano from "@/assets/selo-pernambucano.png";
 import recifeSkyline from "@/assets/recife-skyline.png";
 
 const achievements = [
@@ -84,7 +83,7 @@ const PrideSection = () => {
             transition={{ type: "spring", stiffness: 65, damping: 16 }}
           >
             <HolographicBadge
-              src={seloPernambucano}
+              src="/novo-selo-pernambucano.png"
               alt="Pernambucano com Orgulho — Hospital Veterinário Harmonia"
               className="w-72 md:w-84 lg:w-96"
             />

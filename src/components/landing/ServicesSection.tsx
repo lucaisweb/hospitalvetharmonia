@@ -26,7 +26,7 @@ const services = [
     name: "Cirurgia Veterinária",
     desc: "Procedimentos cirúrgicos de alta complexidade com equipe especializada e centro cirúrgico completo.",
     details:
-      "Nosso centro cirúrgico é equipado com monitores multiparamétricos, aparelhos de anestesia inalatória de última geração e instrumentação especializada. Realizamos procedimentos de alta complexidade nas áreas de tecidos moles, ortopedia e neurocirurgia, sempre com suporte de anestesiologistas veterinários e equipe de enfermagem dedicada durante todo o perioperatório.",
+      "Nosso centro cirúrgico é equipado com monitores multiparamétricos, aparelhos de anestesia inalatória de última geração e instrumentação especializada. Realizamos procedimentos de alta complexidade nas áreas de tecidos moles e ortopedia, sempre com suporte de anestesiologistas veterinários e equipe de enfermagem dedicada durante todo o perioperatório.",
     img: imgCirurgia,
     tag: "Alta Complexidade",
     wide: false,

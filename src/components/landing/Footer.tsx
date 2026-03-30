@@ -111,15 +111,6 @@ const Footer = () => {
             <ul className="space-y-3 text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
               <li>
                 <a
-                  href="tel:08131267555"
-                  className="flex items-center gap-2.5 hover:text-white transition-colors"
-                >
-                  <Phone className="w-4 h-4 flex-shrink-0" strokeWidth={1.75} />
-                  0800 726 7555
-                </a>
-              </li>
-              <li>
-                <a
                   href="https://api.whatsapp.com/send?phone=558131267555&text=Ol%C3%A1!%20vim%20pelo%20site%20e%20tenho%20interesse%20nos%20servi%C3%A7os%20do%20hospital"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -162,7 +153,10 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.75} />
-                <span>Consultas: Seg–Sáb, 8h–20h</span>
+                <span>
+                  Consultas:{" "}
+                  <strong style={{ color: "hsl(155 83% 55%)" }}>24 horas</strong>
+                </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" strokeWidth={1.75} />

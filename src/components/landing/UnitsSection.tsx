@@ -136,10 +136,6 @@ const UnitCard = ({ unit }: { unit: typeof units[0] }) => (
 
     {/* Content */}
     <div className="absolute inset-x-0 bottom-0 z-20 p-6">
-      <p className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: "hsl(155 83% 62%)" }}>
-        {unit.neighborhood}
-      </p>
-
       <h3 className="font-display font-black text-2xl text-white tracking-tight mb-2">{unit.name}</h3>
 
       <motion.div
