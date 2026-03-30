@@ -52,9 +52,9 @@ const pillars = [
   {
     icon: Microscope,
     title: "Inova — Diagnóstico por Imagem",
-    shortDesc: "Raio-x, ultrassonografia, tomografia e broncoscopia com laudo imediato.",
+    shortDesc: "Raio-x, ultrassonografia, tomografia e broncoscopia.",
     description:
-      "A Inova Imagem Veterinária realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Ecodopolercardiografia, Tomografia, Broncoscopia e Traqueobroncoscopia com laudo imediato por especialistas.",
+      "A Inova Imagem Veterinária realiza Raio-x Geral, Ultrassonografia, Eletrocardiograma, Ecodopolercardiografia, Tomografia, Broncoscopia e Traqueobroncoscopia.",
     logo: logoInnova,
     logoAlt: "Inova Imagem Veterinária",
     tag: "Diagnóstico por Imagem",
