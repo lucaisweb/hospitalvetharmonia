@@ -4,9 +4,9 @@ import logoFull from "@/assets/logo-full.png";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 const units = [
-  { name: "Casa Forte", address: "Estr. do Encanamento, 585", link: "https://share.google/KdGA0GIwjDhWEdQu6" },
-  { name: "Madalena", address: "Av. Visc. de Albuquerque, 894", link: "https://share.google/MxoNRPUdrndN78D0M" },
-  { name: "Boa Viagem", address: "Av. Eng. Domingos Ferreira, 3628", link: "https://share.google/nNducPeQ5eSCLwDwv" },
+  { name: "Casa Forte", address: "Estr. do Encanamento, 585", link: "https://maps.app.goo.gl/1xqdttkc6Avn7BNT8" },
+  { name: "Madalena", address: "Av. Visc. de Albuquerque, 894", link: "https://maps.app.goo.gl/MdBiGuUVSyQ6LTy58" },
+  { name: "Boa Viagem", address: "Av. Eng. Domingos Ferreira, 3628", link: "https://maps.app.goo.gl/xt4EtizyvPAiBB538" },
 ];
 
 const Footer = () => {

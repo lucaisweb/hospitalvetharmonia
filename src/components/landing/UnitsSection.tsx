@@ -17,7 +17,7 @@ const units = [
     address: "Estr. do Encanamento, 585 — Casa Forte",
     phone: "(81) 3126-7555",
     image: unidadeCasaForte,
-    mapsLink: "https://share.google/KdGA0GIwjDhWEdQu6",
+    mapsLink: "https://maps.app.goo.gl/1xqdttkc6Avn7BNT8",
     hours: "24h",
   },
   {
@@ -27,7 +27,7 @@ const units = [
     address: "Av. Visc. de Albuquerque, 894 — Madalena",
     phone: "(81) 3126-7555",
     image: unidadeMadalena,
-    mapsLink: "https://share.google/MxoNRPUdrndN78D0M",
+    mapsLink: "https://maps.app.goo.gl/MdBiGuUVSyQ6LTy58",
     hours: "24h",
   },
   {
@@ -37,7 +37,7 @@ const units = [
     address: "Av. Eng. Domingos Ferreira, 3628 — Boa Viagem",
     phone: "(81) 3126-7555",
     image: unidadeBoaViagem,
-    mapsLink: "https://share.google/nNducPeQ5eSCLwDwv",
+    mapsLink: "https://maps.app.goo.gl/xt4EtizyvPAiBB538",
     hours: "24h",
   },
 ];
