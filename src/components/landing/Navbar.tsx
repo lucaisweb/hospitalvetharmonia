@@ -55,7 +55,7 @@ const MagneticCta = () => {
       className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white"
     >
       <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
-      Emergência 24h
+      Urgência 24h
     </motion.a>
   );
 };
@@ -209,7 +209,7 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                 >
                   <Phone className="w-4 h-4" />
-                  Emergência 24h
+                  Urgência 24h
                 </motion.a>
               </motion.div>
             </motion.div>

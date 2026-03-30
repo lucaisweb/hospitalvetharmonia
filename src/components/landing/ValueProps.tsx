@@ -30,7 +30,7 @@ const pillars = [
     stats: [
       { value: "32+", label: "Anos de história" },
       { value: "3", label: "Unidades Recife" },
-      { value: "25+", label: "Especialidades" },
+      { value: "24", label: "Especialidades" },
     ],
     wide: true,
   },

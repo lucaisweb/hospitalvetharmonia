@@ -9,7 +9,7 @@ const achievements = [
   { icon: Award, label: "32+ Anos", sublabel: "de excelência" },
   { icon: ShieldCheck, label: "CRMV-PE", sublabel: "credenciado" },
   { icon: MapPin, label: "3 Unidades", sublabel: "em Recife" },
-  { icon: Stethoscope, label: "25+", sublabel: "especialidades" },
+  { icon: Stethoscope, label: "24", sublabel: "especialidades" },
 ];
 
 const PrideSection = () => {
