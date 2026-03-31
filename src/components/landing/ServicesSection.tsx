@@ -393,7 +393,7 @@ const ServicesSection = () => {
             <p>
               Todos os serviços disponíveis nas{" "}
               <span className="font-semibold" style={{ color: "hsl(155 83% 45%)" }}>3 unidades em Recife</span>
-              {" "}— atendimento de emergência{" "}
+              {" "}— atendimento de urgência{" "}
               <span className="font-semibold" style={{ color: "hsl(155 83% 45%)" }}>24 horas</span>
             </p>
           </motion.div>

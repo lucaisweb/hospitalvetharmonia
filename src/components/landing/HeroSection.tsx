@@ -201,7 +201,7 @@ const HeroSection = () => {
 
                 {/* CTAs */}
                 <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-                  {/* Emergência — Desktop → WhatsApp */}
+                  {/* Urgência — Desktop → WhatsApp */}
                   <HeroCta
                     href={WA_EMERGENCY}
                     target="_blank"
@@ -218,7 +218,7 @@ const HeroSection = () => {
                     Urgência 24h
                   </HeroCta>
 
-                  {/* Emergência — Mobile → tel */}
+                  {/* Urgência — Mobile → tel */}
                   <HeroCta
                     href="tel:558131267555"
                     className="inline-flex md:hidden items-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm"

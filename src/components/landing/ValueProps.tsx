@@ -10,7 +10,7 @@ const pillars = [
     icon: Clock,
     title: "Infraestrutura 24 Horas",
     shortDesc:
-      "Centro cirúrgico de alta complexidade e internação monitorada 24h. Emergência sempre disponível, sem necessidade de agendamento.",
+      "Centro cirúrgico de alta complexidade e internação monitorada 24h. Urgência sempre disponível, sem necessidade de agendamento.",
     description:
       "O Hospital Veterinário Harmonia opera ininterruptamente com equipe multidisciplinar disponível a qualquer hora. Do pronto-atendimento às cirurgias eletivas e de urgência, oferecemos o mesmo padrão de excelência 24 horas por dia, todos os dias do ano.",
     logo: logoHarmonia,
@@ -19,12 +19,12 @@ const pillars = [
     whatsappMsg: "Olá! Gostaria de saber mais sobre a infraestrutura 24h do Hospital Harmonia.",
     accent: "hsl(155, 83%, 28%)",
     accentLight: "hsl(155, 60%, 96%)",
-    features: ["Centro Cirúrgico", "Internação Monitorada", "Emergência 24h", "Oncologia Clínica", "Medicina Preventiva"],
+    features: ["Centro Cirúrgico", "Internação Monitorada", "Urgência 24h", "Oncologia Clínica", "Medicina Preventiva"],
     checklist: [
       "Equipe veterinária especializada presente 24h",
       "Centro cirúrgico com monitoração multiparamétrica",
       "Internação separada por espécie e porte",
-      "Atendimento de emergência sem agendamento",
+      "Atendimento de urgência sem agendamento",
       "Anestesiologia e medicina intensiva dedicadas",
     ],
     stats: [

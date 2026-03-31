@@ -63,7 +63,7 @@ const Badge24h = ({ unit }: { unit: typeof units[0] }) => (
       onClick={(e) => e.stopPropagation()}
       className="absolute top-5 right-5 z-20 hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer hover:opacity-90 transition-opacity"
       style={{ backgroundColor: "hsl(155 83% 28% / 0.9)", color: "white", backdropFilter: "blur(8px)" }}
-      title="Emergência 24h — Falar pelo WhatsApp"
+      title="Urgência 24h — Falar pelo WhatsApp"
     >
       <Clock className="w-3 h-3" strokeWidth={2.5} />
       {unit.hours}
@@ -299,7 +299,7 @@ const UnitsSection = () => {
       >
         <div className="w-8 h-[2px] rounded-full flex-shrink-0" style={{ backgroundColor: "hsl(155 83% 35%)" }} />
         <p>
-          Todas as unidades com atendimento de emergência{" "}
+          Todas as unidades com atendimento de urgência{" "}
           <span className="font-semibold" style={{ color: "hsl(155 83% 30%)" }}>24 horas</span>
         </p>
       </motion.div>
