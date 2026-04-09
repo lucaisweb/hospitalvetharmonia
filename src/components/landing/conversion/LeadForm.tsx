@@ -1,0 +1,426 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, Loader2, ArrowRight, ShieldCheck } from "lucide-react";
+import { submitLead, type LeadPayload } from "@/lib/submit-lead";
+
+const schema = z.object({
+  nome: z.string().trim().min(2, "Informe seu nome"),
+  whatsapp: z
+    .string()
+    .trim()
+    .min(10, "Informe um WhatsApp válido com DDD")
+    .regex(/^[\d\s()+-]+$/, "Apenas números, espaços, ( ) + -"),
+  email: z
+    .string()
+    .trim()
+    .email("E-mail inválido")
+    .optional()
+    .or(z.literal("")),
+  petNome: z.string().trim().max(60).optional().or(z.literal("")),
+  petEspecie: z.string().min(1, "Selecione a espécie"),
+  motivo: z.string().min(1, "Selecione o motivo"),
+  unidade: z.string().min(1, "Selecione a unidade"),
+  mensagem: z.string().trim().max(600).optional().or(z.literal("")),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+const ESPECIES = ["Cão", "Gato", "Ave", "Roedor", "Réptil", "Outro"];
+const MOTIVOS = [
+  "Consulta / Check-up",
+  "Urgência / Emergência",
+  "Exame ou diagnóstico por imagem",
+  "Cirurgia / Pós-operatório",
+  "Especialista (ortopedia, cardio, neuro…)",
+  "Vacinação",
+  "Outro assunto",
+];
+const UNIDADES = [
+  "Casa Forte",
+  "Madalena",
+  "Boa Viagem",
+  "Ainda não sei / qualquer uma",
+];
+
+const WA_NUMBER = "558131267555";
+
+function formatPhone(v: string) {
+  const d = v.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+
+const fieldBase =
+  "w-full h-12 px-4 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 " +
+  "focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors";
+
+const labelBase =
+  "block text-[11px] font-semibold tracking-wider uppercase mb-1.5 text-white/55";
+
+const errorText = "mt-1.5 text-[11px] font-medium text-[hsl(12_85%_68%)]";
+
+const LeadForm = () => {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      nome: "",
+      whatsapp: "",
+      email: "",
+      petNome: "",
+      petEspecie: "",
+      motivo: "",
+      unidade: "",
+      mensagem: "",
+    },
+  });
+
+  const whatsappValue = watch("whatsapp");
+
+  const onSubmit = async (values: FormValues) => {
+    setSubmitError(null);
+    try {
+      const payload: LeadPayload = {
+        nome: values.nome,
+        whatsapp: values.whatsapp,
+        email: values.email || undefined,
+        petNome: values.petNome || undefined,
+        petEspecie: values.petEspecie,
+        motivo: values.motivo,
+        unidade: values.unidade,
+        mensagem: values.mensagem || undefined,
+      };
+      await submitLead(payload);
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setSubmitError(
+        "Não conseguimos enviar agora. Por favor, chame no WhatsApp — atendemos na hora.",
+      );
+    }
+  };
+
+  if (submitted) {
+    const waText = encodeURIComponent(
+      "Olá! Acabei de preencher o formulário no site e gostaria de dar sequência.",
+    );
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 18 }}
+        className="rounded-2xl p-8 md:p-10 border border-white/10"
+        style={{ backgroundColor: "hsl(170 35% 10% / 0.9)" }}
+      >
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(155 83% 45%) 0%, hsl(155 83% 28%) 100%)",
+            boxShadow: "0 12px 32px -10px hsla(155, 83%, 40%, 0.55)",
+          }}
+        >
+          <Check className="w-7 h-7 text-white" strokeWidth={3} />
+        </div>
+        <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-3">
+          Recebemos sua solicitação.
+        </h3>
+        <p className="text-white/60 text-sm md:text-base leading-relaxed mb-6">
+          Nossa equipe vai entrar em contato em instantes pelo WhatsApp que você
+          informou. Se for urgente, fale agora mesmo com a gente:
+        </p>
+        <a
+          href={`https://wa.me/${WA_NUMBER}?text=${waText}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold text-white text-sm"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(155 83% 38%) 0%, hsl(155 83% 24%) 100%)",
+            boxShadow: "0 10px 28px -8px hsla(155, 83%, 40%, 0.55)",
+          }}
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.325 0-4.47-.754-6.213-2.032l-.354-.27-3.666 1.228 1.228-3.666-.27-.354A9.935 9.935 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
+          </svg>
+          Falar agora no WhatsApp
+        </a>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 90, damping: 20, delay: 0.15 }}
+      className="rounded-2xl p-6 md:p-8 border border-white/10 relative overflow-hidden"
+      style={{
+        backgroundColor: "hsl(170 35% 10% / 0.92)",
+        boxShadow: "0 40px 80px -30px rgba(0,0,0,0.6)",
+      }}
+    >
+      {/* Glow decorativo */}
+      <div
+        aria-hidden
+        className="absolute -top-20 -right-20 w-56 h-56 rounded-full pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle, hsl(155 83% 40% / 0.22) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative">
+        <div className="flex items-center gap-2 mb-5">
+          <span
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase border"
+            style={{
+              backgroundColor: "hsl(155 83% 30% / 0.14)",
+              borderColor: "hsl(155 83% 30% / 0.32)",
+              color: "hsl(155 83% 65%)",
+            }}
+          >
+            <span className="relative flex w-1.5 h-1.5">
+              <span
+                className="absolute inline-flex h-full w-full rounded-full animate-ping"
+                style={{ backgroundColor: "hsl(155 83% 50%)" }}
+              />
+              <span
+                className="relative w-1.5 h-1.5 rounded-full"
+                style={{ backgroundColor: "hsl(155 83% 55%)" }}
+              />
+            </span>
+            Resposta em minutos
+          </span>
+        </div>
+
+        <h2 className="font-display text-2xl md:text-[28px] font-bold text-white mb-1.5 tracking-tight">
+          Agende o atendimento do seu pet
+        </h2>
+        <p className="text-white/50 text-sm mb-6">
+          Preencha abaixo — nossa equipe liga ou chama no WhatsApp em seguida.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Nome */}
+          <div className="md:col-span-2">
+            <label htmlFor="nome" className={labelBase}>
+              Seu nome *
+            </label>
+            <input
+              id="nome"
+              type="text"
+              autoComplete="name"
+              placeholder="Como podemos te chamar?"
+              className={fieldBase}
+              {...register("nome")}
+            />
+            {errors.nome && <p className={errorText}>{errors.nome.message}</p>}
+          </div>
+
+          {/* WhatsApp */}
+          <div>
+            <label htmlFor="whatsapp" className={labelBase}>
+              WhatsApp *
+            </label>
+            <input
+              id="whatsapp"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="(81) 9 0000-0000"
+              className={fieldBase}
+              value={whatsappValue}
+              onChange={(e) =>
+                setValue("whatsapp", formatPhone(e.target.value), {
+                  shouldValidate: true,
+                })
+              }
+            />
+            {errors.whatsapp && (
+              <p className={errorText}>{errors.whatsapp.message}</p>
+            )}
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className={labelBase}>
+              E-mail (opcional)
+            </label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="email"
+              placeholder="seu@email.com"
+              className={fieldBase}
+              {...register("email")}
+            />
+            {errors.email && (
+              <p className={errorText}>{errors.email.message}</p>
+            )}
+          </div>
+
+          {/* Pet nome */}
+          <div>
+            <label htmlFor="petNome" className={labelBase}>
+              Nome do pet
+            </label>
+            <input
+              id="petNome"
+              type="text"
+              placeholder="Opcional"
+              className={fieldBase}
+              {...register("petNome")}
+            />
+          </div>
+
+          {/* Espécie */}
+          <div>
+            <label htmlFor="petEspecie" className={labelBase}>
+              Espécie *
+            </label>
+            <select
+              id="petEspecie"
+              className={fieldBase + " appearance-none"}
+              {...register("petEspecie")}
+            >
+              <option value="">Selecione</option>
+              {ESPECIES.map((e) => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
+            {errors.petEspecie && (
+              <p className={errorText}>{errors.petEspecie.message}</p>
+            )}
+          </div>
+
+          {/* Motivo */}
+          <div className="md:col-span-2">
+            <label htmlFor="motivo" className={labelBase}>
+              Motivo do contato *
+            </label>
+            <select
+              id="motivo"
+              className={fieldBase + " appearance-none"}
+              {...register("motivo")}
+            >
+              <option value="">Selecione</option>
+              {MOTIVOS.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
+            {errors.motivo && (
+              <p className={errorText}>{errors.motivo.message}</p>
+            )}
+          </div>
+
+          {/* Unidade */}
+          <div className="md:col-span-2">
+            <label htmlFor="unidade" className={labelBase}>
+              Unidade de preferência *
+            </label>
+            <select
+              id="unidade"
+              className={fieldBase + " appearance-none"}
+              {...register("unidade")}
+            >
+              <option value="">Selecione</option>
+              {UNIDADES.map((u) => (
+                <option key={u} value={u}>
+                  {u}
+                </option>
+              ))}
+            </select>
+            {errors.unidade && (
+              <p className={errorText}>{errors.unidade.message}</p>
+            )}
+          </div>
+
+          {/* Mensagem */}
+          <div className="md:col-span-2">
+            <label htmlFor="mensagem" className={labelBase}>
+              Conte rapidamente (opcional)
+            </label>
+            <textarea
+              id="mensagem"
+              rows={3}
+              placeholder="Sintomas, dúvidas, melhor horário para contato…"
+              className={
+                "w-full px-4 py-3 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 " +
+                "focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors resize-none"
+              }
+              {...register("mensagem")}
+            />
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {submitError && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="mt-5 px-4 py-3 rounded-xl text-sm border"
+              style={{
+                backgroundColor: "hsl(12 76% 20% / 0.35)",
+                borderColor: "hsl(12 76% 56% / 0.4)",
+                color: "hsl(12 90% 80%)",
+              }}
+            >
+              {submitError}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="mt-6 w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full font-semibold text-white text-[15px] transition-transform active:scale-[0.98] disabled:opacity-70"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
+            boxShadow: "0 14px 34px -10px hsla(155, 83%, 40%, 0.6)",
+          }}
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Enviando…
+            </>
+          ) : (
+            <>
+              Quero ser contatado
+              <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+            </>
+          )}
+        </button>
+
+        <p className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          Seus dados são usados só para te retornarmos. Sem spam.
+        </p>
+      </div>
+    </motion.form>
+  );
+};
+
+export default LeadForm;

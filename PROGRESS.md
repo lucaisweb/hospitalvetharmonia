@@ -51,3 +51,50 @@ In Progress — Phase 2 (ajustes pós-redesign)
 Aguardar confirmação do usuário sobre o estado visual atual do site. Se solicitado:
 1. Implementar Google Maps com pins reais (user deve fornecer API key)
 2. Qualquer ajuste visual adicional nas seções
+
+---
+
+## Phase 3 — LP de Conversão (rota /contato)
+
+### Goal
+Replicar a LP institucional numa segunda rota extremamente focada em conversão
+de leads: formulário proeminente, zero distrações (sem mapa, sem links
+externos), leads salvos em Google Sheets (sem custo mensal).
+
+### Completed
+- [x] `src/lib/submit-lead.ts` — client do webhook (fetch + mode no-cors)
+- [x] `src/hooks/use-seo.ts` — atualização dinâmica de title/meta/JSON-LD por rota
+- [x] `src/components/landing/conversion/LeadForm.tsx` — formulário com zod + react-hook-form, máscara de telefone, success state com CTA WhatsApp
+- [x] `src/components/landing/conversion/ConversionNav.tsx` — navbar minimal (logo + ligar)
+- [x] `src/components/landing/conversion/ConversionFooter.tsx` — footer minimal (sem links externos)
+- [x] `src/pages/Contato.tsx` — hero com form à direita, value props, testimonials, CTA final
+- [x] `src/App.tsx` — rotas `/contato` e `/agendar` apontando para Contato
+- [x] `scripts/google-apps-script.js` — código pronto pra colar no Apps Script
+- [x] `SETUP_LEADS.md` — guia passo-a-passo de setup do webhook/planilha
+- [x] `.env.example` — exemplo da `VITE_LEADS_WEBHOOK_URL`
+- [x] SEO por rota: JSON-LD VeterinaryCare, meta description orientada a conversão
+- [x] Build de produção validado (sem erros)
+
+### Completed (config webhook)
+- [x] Webhook do Apps Script publicado e online (`GET` retorna `Harmonia leads OK`)
+- [x] `.env.local` criado com a URL real do webhook
+- [x] `VITE_LEADS_WEBHOOK_URL` setada na Vercel — Production + Development
+  - Projeto Vercel: `plapadas-projects/backup-hosp-harmonia`
+  - Preview ficou de fora (CLI não-interativo recusou "all branches" — só usado para PR/preview branches, irrelevante já que deploy é só de `main`)
+
+### Pending
+- [ ] Commit + push pra disparar deploy de produção (env só entra em build novo)
+- [ ] Teste end-to-end em `/contato` após o deploy
+
+### Decisions Made
+- **Persistência:** Google Sheets via Apps Script Web App — gratuito, sem servidor, sem Supabase.
+- **Rota:** `/contato` (e alias `/agendar`) no mesmo domínio, aproveitando o `vercel.json` rewrite de SPA existente.
+- **SEO diferenciado:** hook `useSeo` atualiza `<title>`, meta tags OG/Twitter, canonical e JSON-LD on-mount por rota — sem precisar de react-helmet.
+- **Form UX:** fetch com `mode: "no-cors"` (limitação do Apps Script em POST) — assumimos sucesso se não houver erro de rede.
+- **Zero distração:** nav sem links internos, footer sem mapa/redes sociais, watermark sutil do símbolo Harmonia.
+
+### Resume From Here
+LP de conversão pronta, buildando, env vars configuradas na Vercel. Próximo
+passo: commit + push pra disparar deploy. Após o deploy, abrir
+`https://backup-hosp-harmonia.vercel.app/contato` (ou domínio custom), preencher
+o form e validar que o lead chega na planilha.
