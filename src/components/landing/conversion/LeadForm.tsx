@@ -59,6 +59,16 @@ const fieldBase =
   "w-full h-12 px-4 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 " +
   "focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors";
 
+// Chevron SVG inline para selects (appearance-none remove a setinha nativa)
+const selectChevronStyle: React.CSSProperties = {
+  backgroundImage:
+    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ffffff66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 10 13 14 9'/%3E%3C/svg%3E\")",
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "right 14px center",
+  backgroundSize: "16px",
+  paddingRight: "40px",
+};
+
 const labelBase =
   "block text-[11px] font-semibold tracking-wider uppercase mb-1.5 text-white/55";
 
@@ -284,6 +294,7 @@ const LeadForm = () => {
               id="petNome"
               type="text"
               placeholder="Opcional"
+              autoComplete="off"
               className={fieldBase}
               {...register("petNome")}
             />
@@ -296,12 +307,14 @@ const LeadForm = () => {
             </label>
             <select
               id="petEspecie"
-              className={fieldBase + " appearance-none"}
+              className={fieldBase + " appearance-none cursor-pointer"}
+              style={selectChevronStyle}
+              autoComplete="off"
               {...register("petEspecie")}
             >
-              <option value="">Selecione</option>
+              <option value="" style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>Selecione</option>
               {ESPECIES.map((e) => (
-                <option key={e} value={e}>
+                <option key={e} value={e} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
                   {e}
                 </option>
               ))}
@@ -318,12 +331,14 @@ const LeadForm = () => {
             </label>
             <select
               id="motivo"
-              className={fieldBase + " appearance-none"}
+              className={fieldBase + " appearance-none cursor-pointer"}
+              style={selectChevronStyle}
+              autoComplete="off"
               {...register("motivo")}
             >
               <option value="">Selecione</option>
               {MOTIVOS.map((m) => (
-                <option key={m} value={m}>
+                <option key={m} value={m} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
                   {m}
                 </option>
               ))}
@@ -340,12 +355,14 @@ const LeadForm = () => {
             </label>
             <select
               id="unidade"
-              className={fieldBase + " appearance-none"}
+              className={fieldBase + " appearance-none cursor-pointer"}
+              style={selectChevronStyle}
+              autoComplete="off"
               {...register("unidade")}
             >
               <option value="">Selecione</option>
               {UNIDADES.map((u) => (
-                <option key={u} value={u}>
+                <option key={u} value={u} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
                   {u}
                 </option>
               ))}

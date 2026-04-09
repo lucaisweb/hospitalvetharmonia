@@ -1,9 +1,53 @@
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import { Phone } from "lucide-react";
 import logoFull from "@/assets/logo-full.png";
 
 const TEL_EMERGENCY = "tel:558131267555";
+
+/* ── Magnetic CTA — port do Navbar principal ── */
+const MagneticCta = () => {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 220, damping: 16 });
+  const sy = useSpring(y, { stiffness: 220, damping: 16 });
+
+  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    x.set((e.clientX - r.left - r.width / 2) * 0.3);
+    y.set((e.clientY - r.top - r.height / 2) * 0.3);
+  };
+  const onLeave = () => { x.set(0); y.set(0); };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={TEL_EMERGENCY}
+      style={{
+        x: sx,
+        y: sy,
+        background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
+        boxShadow: "0 4px 16px -4px hsla(12, 76%, 56%, 0.5)",
+      }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      whileTap={{ scale: 0.95 }}
+      className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold text-white whitespace-nowrap"
+    >
+      <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
+      <span className="hidden sm:inline">Ligar agora</span>
+      <span className="sm:hidden">Ligar</span>
+    </motion.a>
+  );
+};
 
 /**
  * Navbar minimal para a LP de conversão.
@@ -12,17 +56,20 @@ const TEL_EMERGENCY = "tel:558131267555";
  */
 const ConversionNav = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
+    const prev = scrollY.getPrevious() ?? 0;
     setIsScrolled(latest > 40);
+    setHidden(latest > prev && latest > 200);
   });
 
   return (
     <motion.nav
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 120, damping: 22 }}
+      variants={{ visible: { y: 0 }, hidden: { y: "-120%" } }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ type: "spring", stiffness: 300, damping: 32, mass: 0.8 }}
       className="fixed top-0 left-0 right-0 z-50"
     >
       <div className="px-4 pt-4">
@@ -42,11 +89,17 @@ const ConversionNav = () => {
             boxShadow: isScrolled ? "0 8px 32px -8px rgba(0,0,0,0.4)" : "none",
           }}
         >
-          <div
+          <motion.div
+            animate={{ height: isScrolled ? 58 : 66 }}
+            transition={{ duration: 0.3 }}
             className="px-5 md:px-6 flex items-center justify-between"
-            style={{ height: "62px" }}
           >
-            <div className="flex items-center gap-3">
+            <motion.a
+              href="#topo"
+              animate={{ scale: isScrolled ? 0.93 : 1 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center gap-3"
+            >
               <img
                 src={logoFull}
                 alt="Hospital Veterinário Harmonia"
@@ -63,22 +116,10 @@ const ConversionNav = () => {
                   Harmonia
                 </p>
               </div>
-            </div>
+            </motion.a>
 
-            <a
-              href={TEL_EMERGENCY}
-              className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold text-white whitespace-nowrap"
-              style={{
-                background:
-                  "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
-                boxShadow: "0 6px 18px -6px hsla(12, 76%, 56%, 0.55)",
-              }}
-            >
-              <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
-              <span className="hidden sm:inline">Ligar agora</span>
-              <span className="sm:hidden">Ligar</span>
-            </a>
-          </div>
+            <MagneticCta />
+          </motion.div>
         </motion.div>
       </div>
     </motion.nav>
