@@ -13,7 +13,6 @@ import {
   Heart,
   Building2,
   Star,
-  Phone,
 } from "lucide-react";
 import ConversionNav from "@/components/landing/conversion/ConversionNav";
 import ConversionFooter from "@/components/landing/conversion/ConversionFooter";
@@ -618,35 +617,22 @@ const Contato = () => {
                 Role até o topo, preencha o formulário e nossa equipe entra em
                 contato em minutos. Se preferir, ligue agora.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+              <div className="flex items-center justify-center">
                 <MagneticButton
                   href="#topo"
                   onClick={(e) => {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-semibold text-white text-sm w-full sm:w-auto"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold text-white text-[15px]"
                   style={{
                     background:
                       "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
-                    boxShadow: "0 14px 34px -10px hsla(155, 83%, 40%, 0.6)",
+                    boxShadow:
+                      "0 16px 40px -12px hsla(155, 83%, 40%, 0.6), inset 0 1px 0 rgba(255,255,255,0.18)",
                   }}
                 >
                   Preencher formulário
-                </MagneticButton>
-
-                {/* Botão telefone — gradiente coral + ícone + magnetic */}
-                <MagneticButton
-                  href="tel:558131267555"
-                  className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full font-semibold text-white text-sm w-full sm:w-auto"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
-                    boxShadow: "0 14px 34px -10px hsla(12, 76%, 56%, 0.55)",
-                  }}
-                >
-                  <Phone className="w-4 h-4" strokeWidth={2.5} />
-                  (81) 3126-7555
                 </MagneticButton>
               </div>
             </motion.div>

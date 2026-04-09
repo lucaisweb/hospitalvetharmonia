@@ -133,6 +133,12 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes submit-pulse {
+  0%   { box-shadow: 0 0 0 0   hsla(155, 83%, 50%, 0.55); }
+  70%  { box-shadow: 0 0 0 14px hsla(155, 83%, 50%, 0);    }
+  100% { box-shadow: 0 0 0 0   hsla(155, 83%, 50%, 0);    }
+}
+
 /* ── Utility Animation Classes ── */
 
 .animate-marquee {

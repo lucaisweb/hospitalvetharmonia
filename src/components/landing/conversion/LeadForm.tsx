@@ -74,8 +74,35 @@ const labelBase =
 
 const errorText = "mt-1.5 text-[11px] font-medium text-[hsl(12_85%_68%)]";
 
+/**
+ * Monta a mensagem pré-preenchida do WhatsApp com os dados do formulário.
+ * Isso agiliza o atendimento: a equipe já vê nome, pet, motivo e unidade ao
+ * abrir o chat, sem precisar perguntar de novo.
+ */
+function buildWaMessage(v: FormValues): string {
+  const lines = [
+    "Olá! Acabei de preencher o formulário no site do Harmonia. Segue meus dados:",
+    "",
+    `*Nome:* ${v.nome}`,
+    `*WhatsApp:* ${v.whatsapp}`,
+  ];
+  if (v.email) lines.push(`*E-mail:* ${v.email}`);
+  const petLabel = v.petNome ? `${v.petNome} (${v.petEspecie})` : v.petEspecie;
+  lines.push(`*Pet:* ${petLabel}`);
+  lines.push(`*Motivo:* ${v.motivo}`);
+  lines.push(`*Unidade:* ${v.unidade}`);
+  if (v.mensagem) {
+    lines.push("");
+    lines.push(`*Observações:* ${v.mensagem}`);
+  }
+  lines.push("");
+  lines.push("Gostaria de dar sequência ao atendimento. Obrigado!");
+  return lines.join("\n");
+}
+
 const LeadForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormValues | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
@@ -114,6 +141,7 @@ const LeadForm = () => {
         mensagem: values.mensagem || undefined,
       };
       await submitLead(payload);
+      setSubmittedData(values);
       setSubmitted(true);
     } catch (err) {
       console.error(err);
@@ -123,10 +151,8 @@ const LeadForm = () => {
     }
   };
 
-  if (submitted) {
-    const waText = encodeURIComponent(
-      "Olá! Acabei de preencher o formulário no site e gostaria de dar sequência.",
-    );
+  if (submitted && submittedData) {
+    const waText = encodeURIComponent(buildWaMessage(submittedData));
     return (
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -408,28 +434,65 @@ const LeadForm = () => {
           )}
         </AnimatePresence>
 
-        <button
+        <motion.button
           type="submit"
           disabled={isSubmitting}
-          className="mt-6 w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full font-semibold text-white text-[15px] transition-transform active:scale-[0.98] disabled:opacity-70"
+          whileHover={{ scale: 1.015, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 340, damping: 18 }}
+          className="mt-6 relative w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full font-semibold text-white text-[15px] overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
           style={{
             background:
               "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
-            boxShadow: "0 14px 34px -10px hsla(155, 83%, 40%, 0.6)",
+            boxShadow:
+              "0 14px 34px -10px hsla(155, 83%, 40%, 0.6), inset 0 1px 0 rgba(255,255,255,0.18)",
           }}
         >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Enviando…
-            </>
-          ) : (
-            <>
-              Quero ser contatado
-              <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
-            </>
-          )}
-        </button>
+          {/* Pulsing ring halo (sempre ativo pra chamar atenção) */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-full opacity-70"
+            style={{
+              boxShadow: "0 0 0 0 hsla(155, 83%, 50%, 0.6)",
+              animation: "submit-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            }}
+          />
+
+          {/* Sheen sweep on hover */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-full overflow-hidden"
+          >
+            <span
+              className="absolute top-0 left-[-60%] w-[55%] h-full skew-x-[-18deg] opacity-0 group-hover:opacity-100 group-hover:translate-x-[260%] transition-all duration-[900ms] ease-out"
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%)",
+              }}
+            />
+          </span>
+
+          {/* Conteúdo */}
+          <span className="relative inline-flex items-center gap-2.5">
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Enviando…
+              </>
+            ) : (
+              <>
+                Quero ser contatado
+                <motion.span
+                  className="inline-flex"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                >
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+                </motion.span>
+              </>
+            )}
+          </span>
+        </motion.button>
 
         <p className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-white/40">
           <ShieldCheck className="w-3.5 h-3.5" />
