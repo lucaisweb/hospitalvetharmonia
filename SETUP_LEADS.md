@@ -76,21 +76,34 @@ Crie um arquivo **`.env.local`** na raiz do projeto (na mesma pasta do
 `package.json`):
 
 ```env
-VITE_LEADS_WEBHOOK_URL=https://script.google.com/macros/s/AKfyc.../exec
+LEADS_WEBHOOK_URL=https://script.google.com/macros/s/AKfyc.../exec
 ```
 
-Reinicie o `npm run dev` ou `bun dev`.
+> ⚠️ **Sem o prefixo `VITE_`** — essa env é lida APENAS pela Vercel Function
+> em `api/lead.ts` no servidor, e NUNCA vai pro bundle do cliente. Isso
+> garante que a URL do Apps Script fica escondida do navegador.
+
+Reinicie o `npm run dev` ou `bun dev`. Em dev, a Vercel Function não roda
+localmente com o Vite — pra testar o fluxo end-to-end em dev você precisa de
+`vercel dev` (opcional).
 
 ### Para produção na Vercel
 
 1. Vá ao dashboard do projeto na Vercel.
 2. **Settings → Environment Variables**.
 3. Adicione:
-   - **Name:** `VITE_LEADS_WEBHOOK_URL`
+   - **Name:** `LEADS_WEBHOOK_URL` ← sem `VITE_`, é server-only
    - **Value:** a URL do webhook que você copiou no passo 4
    - **Environments:** marque `Production`, `Preview` e `Development`
+   - **Sensitive:** ✅ marque pra proteger o valor
 4. Clique em **Save**.
 5. Faça um novo deploy (a env só entra em builds novos).
+
+Ou via CLI:
+
+```bash
+vercel env add LEADS_WEBHOOK_URL production --sensitive
+```
 
 ---
 
@@ -112,21 +125,36 @@ Se não aparecer:
 ## Como funciona o fluxo
 
 ```
-[Formulário /contato]
+[Formulário /contato]                    ← browser (React)
        │
-       │  POST JSON (mode: no-cors)
+       │  POST /api/lead  (JSON, same-origin)
        ▼
-[Google Apps Script Web App]
+[Vercel Function: api/lead.ts]           ← server (Node, Fluid Compute)
+       │     • valida campos
+       │     • honeypot
+       │     • lê LEADS_WEBHOOK_URL do env
+       │
+       │  POST JSON
+       ▼
+[Google Apps Script Web App]             ← Google
        │
        │  appendRow()
        ▼
 [Google Sheets — "Harmonia Leads"]
 ```
 
-Por que `mode: "no-cors"`? O Apps Script não envia headers CORS em POSTs, então
-o navegador bloqueia a leitura da resposta. Usando `no-cors`, o request **vai**
-ser entregue ao Google (e os dados gravados), mas a gente não consegue ler o
-retorno — o que tá ok, porque assumimos sucesso ao não dar erro de rede.
+**Por que uma Vercel Function no meio?**
+
+1. **Esconde a URL do webhook.** Antes, usávamos `VITE_LEADS_WEBHOOK_URL`, que
+   o Vite embutia no bundle JS do cliente — qualquer pessoa podia abrir o
+   DevTools e pegar a URL. Agora ela vive só no servidor.
+2. **Dá pra ler status real.** Antes usávamos `mode: "no-cors"` pra burlar a
+   falta de CORS do Apps Script; mas isso esconde falhas. Agora o client fala
+   same-origin com `/api/lead` e recebe um JSON real de sucesso/erro.
+3. **Validação server-side.** O `api/lead.ts` valida nome mínimo, whatsapp
+   mínimo, e descarta requisições com honeypot preenchido (bots).
+4. **Base pra evoluir.** Dá pra adicionar rate-limit, Turnstile/reCAPTCHA,
+   notificação, etc. sem tocar no front.
 
 ---
 
@@ -151,5 +179,5 @@ Apps Script:
 - [ ] Função `setup` executada (cabeçalho aparece na planilha)
 - [ ] Web app publicado com acesso "Qualquer pessoa"
 - [ ] URL do webhook copiada
-- [ ] `VITE_LEADS_WEBHOOK_URL` configurada (local e Vercel)
+- [ ] `LEADS_WEBHOOK_URL` configurada (local e Vercel, **sem** prefixo `VITE_`)
 - [ ] Teste enviado, apareceu na planilha
