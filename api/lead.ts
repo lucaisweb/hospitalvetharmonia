@@ -10,9 +10,7 @@
  *   LEADS_WEBHOOK_URL = https://script.google.com/macros/s/.../exec
  */
 
-export const config = {
-  runtime: "nodejs",
-};
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 type LeadBody = {
   nome?: string;
@@ -37,49 +35,81 @@ function clean(v: unknown): string {
   return v.trim().slice(0, MAX_FIELD);
 }
 
+function sendJson(
+  res: ServerResponse,
+  status: number,
+  data: Record<string, unknown>,
+): void {
+  res.statusCode = status;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify(data));
+}
+
+async function readJsonBody<T>(req: IncomingMessage): Promise<T> {
+  // Em Vercel Functions (Node), o body já vem parseado em req.body se for
+  // Content-Type: application/json. Mas nem sempre — depende da versão.
+  // Então lemos stream como fallback.
+  const anyReq = req as IncomingMessage & { body?: unknown };
+  if (anyReq.body !== undefined && anyReq.body !== null) {
+    if (typeof anyReq.body === "string") {
+      return JSON.parse(anyReq.body) as T;
+    }
+    return anyReq.body as T;
+  }
+
+  const chunks: Buffer[] = [];
+  for await (const chunk of req) {
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : (chunk as Buffer));
+  }
+  const raw = Buffer.concat(chunks).toString("utf8");
+  if (!raw) return {} as T;
+  return JSON.parse(raw) as T;
+}
+
 export default async function handler(
-  req: Request,
-): Promise<Response> {
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
   if (req.method !== "POST") {
-    return Response.json(
-      { ok: false, error: "method_not_allowed" },
-      { status: 405 },
-    );
+    sendJson(res, 405, { ok: false, error: "method_not_allowed" });
+    return;
   }
 
   const webhook = process.env.LEADS_WEBHOOK_URL;
   if (!webhook) {
     console.error("[api/lead] LEADS_WEBHOOK_URL is not set");
-    return Response.json(
-      { ok: false, error: "server_misconfigured" },
-      { status: 500 },
-    );
+    sendJson(res, 500, { ok: false, error: "server_misconfigured" });
+    return;
   }
 
   let body: LeadBody;
   try {
-    body = (await req.json()) as LeadBody;
+    body = await readJsonBody<LeadBody>(req);
   } catch {
-    return Response.json(
-      { ok: false, error: "invalid_json" },
-      { status: 400 },
-    );
+    sendJson(res, 400, { ok: false, error: "invalid_json" });
+    return;
   }
 
   // Honeypot: se preenchido, finge sucesso mas descarta
   if (body._hp && body._hp.trim() !== "") {
-    return Response.json({ ok: true });
+    sendJson(res, 200, { ok: true });
+    return;
   }
 
   // Validação mínima server-side
   const nome = clean(body.nome);
   const whatsapp = clean(body.whatsapp);
   if (nome.length < 2 || whatsapp.length < 10) {
-    return Response.json(
-      { ok: false, error: "invalid_fields" },
-      { status: 400 },
-    );
+    sendJson(res, 400, { ok: false, error: "invalid_fields" });
+    return;
   }
+
+  const fwd = req.headers["x-forwarded-for"];
+  const ip = Array.isArray(fwd)
+    ? fwd[0]
+    : typeof fwd === "string"
+    ? fwd.split(",")[0].trim()
+    : "";
 
   const payload = {
     nome,
@@ -91,40 +121,35 @@ export default async function handler(
     unidade: clean(body.unidade),
     mensagem: clean(body.mensagem),
     origem: clean(body.origem) || "LP Conversão - /contato",
-    userAgent: clean(body.userAgent) || req.headers.get("user-agent") || "",
+    userAgent:
+      clean(body.userAgent) || (req.headers["user-agent"] as string) || "",
     timestamp: clean(body.timestamp) || new Date().toISOString(),
-    ip:
-      req.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-      req.headers.get("x-real-ip") ||
-      "",
+    ip,
   };
 
   try {
-    // Apps Script devolve 302 após o POST. fetch() do Node segue redirects
-    // automaticamente, e já é um POST com body — mas o Google às vezes
-    // re-POSTa, às vezes vira GET. Por isso usamos redirect: "follow" e
-    // aceitamos qualquer 2xx/3xx do lado deles.
-    const res = await fetch(webhook, {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12_000);
+
+    const r = await fetch(webhook, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload),
       redirect: "follow",
+      signal: controller.signal,
     });
 
-    if (!res.ok) {
-      console.error("[api/lead] webhook responded with", res.status);
-      return Response.json(
-        { ok: false, error: "webhook_failed" },
-        { status: 502 },
-      );
+    clearTimeout(timeout);
+
+    if (!r.ok) {
+      console.error("[api/lead] webhook responded with", r.status);
+      sendJson(res, 502, { ok: false, error: "webhook_failed" });
+      return;
     }
 
-    return Response.json({ ok: true });
+    sendJson(res, 200, { ok: true });
   } catch (err) {
     console.error("[api/lead] fetch error:", err);
-    return Response.json(
-      { ok: false, error: "network_error" },
-      { status: 502 },
-    );
+    sendJson(res, 502, { ok: false, error: "network_error" });
   }
 }
