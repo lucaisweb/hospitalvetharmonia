@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Check, Loader2, ArrowRight, ShieldCheck } from "lucide-react";
 import { submitLead, type LeadPayload } from "@/lib/submit-lead";
 
+/* ── Schema conciso — só o essencial ── */
 const schema = z.object({
   nome: z.string().trim().min(2, "Informe seu nome"),
   whatsapp: z
@@ -13,22 +14,12 @@ const schema = z.object({
     .trim()
     .min(10, "Informe um WhatsApp válido com DDD")
     .regex(/^[\d\s()+-]+$/, "Apenas números, espaços, ( ) + -"),
-  email: z
-    .string()
-    .trim()
-    .email("E-mail inválido")
-    .optional()
-    .or(z.literal("")),
-  petNome: z.string().trim().max(60).optional().or(z.literal("")),
-  petEspecie: z.string().min(1, "Selecione a espécie"),
   motivo: z.string().min(1, "Selecione o motivo"),
-  unidade: z.string().min(1, "Selecione a unidade"),
   mensagem: z.string().trim().max(600).optional().or(z.literal("")),
 });
 
 type FormValues = z.infer<typeof schema>;
 
-const ESPECIES = ["Cão", "Gato", "Ave", "Roedor", "Réptil", "Outro"];
 const MOTIVOS = [
   "Consulta / Check-up",
   "Urgência / Emergência",
@@ -37,12 +28,6 @@ const MOTIVOS = [
   "Especialista (ortopedia, cardio, neuro…)",
   "Vacinação",
   "Outro assunto",
-];
-const UNIDADES = [
-  "Casa Forte",
-  "Madalena",
-  "Boa Viagem",
-  "Ainda não sei / qualquer uma",
 ];
 
 const WA_NUMBER = "558131267555";
@@ -55,11 +40,25 @@ function formatPhone(v: string) {
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
 }
 
+function buildWaMessage(v: FormValues): string {
+  const lines = [
+    "Olá! Acabei de preencher o formulário no site do Harmonia.",
+    "",
+    `*Nome:* ${v.nome}`,
+    `*WhatsApp:* ${v.whatsapp}`,
+    `*Motivo:* ${v.motivo}`,
+  ];
+  if (v.mensagem) {
+    lines.push(`*Observações:* ${v.mensagem}`);
+  }
+  lines.push("", "Gostaria de dar sequência ao atendimento!");
+  return lines.join("\n");
+}
+
 const fieldBase =
   "w-full h-12 px-4 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 " +
   "focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors";
 
-// Chevron SVG inline para selects (appearance-none remove a setinha nativa)
 const selectChevronStyle: React.CSSProperties = {
   backgroundImage:
     "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ffffff66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 10 13 14 9'/%3E%3C/svg%3E\")",
@@ -69,36 +68,8 @@ const selectChevronStyle: React.CSSProperties = {
   paddingRight: "40px",
 };
 
-const labelBase =
-  "block text-[11px] font-semibold tracking-wider uppercase mb-1.5 text-white/55";
-
+const labelBase = "block text-[11px] font-semibold tracking-wider uppercase mb-1.5 text-white/55";
 const errorText = "mt-1.5 text-[11px] font-medium text-[hsl(12_85%_68%)]";
-
-/**
- * Monta a mensagem pré-preenchida do WhatsApp com os dados do formulário.
- * Isso agiliza o atendimento: a equipe já vê nome, pet, motivo e unidade ao
- * abrir o chat, sem precisar perguntar de novo.
- */
-function buildWaMessage(v: FormValues): string {
-  const lines = [
-    "Olá! Acabei de preencher o formulário no site do Harmonia. Segue meus dados:",
-    "",
-    `*Nome:* ${v.nome}`,
-    `*WhatsApp:* ${v.whatsapp}`,
-  ];
-  if (v.email) lines.push(`*E-mail:* ${v.email}`);
-  const petLabel = v.petNome ? `${v.petNome} (${v.petEspecie})` : v.petEspecie;
-  lines.push(`*Pet:* ${petLabel}`);
-  lines.push(`*Motivo:* ${v.motivo}`);
-  lines.push(`*Unidade:* ${v.unidade}`);
-  if (v.mensagem) {
-    lines.push("");
-    lines.push(`*Observações:* ${v.mensagem}`);
-  }
-  lines.push("");
-  lines.push("Gostaria de dar sequência ao atendimento. Obrigado!");
-  return lines.join("\n");
-}
 
 const LeadForm = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -113,16 +84,7 @@ const LeadForm = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      nome: "",
-      whatsapp: "",
-      email: "",
-      petNome: "",
-      petEspecie: "",
-      motivo: "",
-      unidade: "",
-      mensagem: "",
-    },
+    defaultValues: { nome: "", whatsapp: "", motivo: "", mensagem: "" },
   });
 
   const whatsappValue = watch("whatsapp");
@@ -133,11 +95,9 @@ const LeadForm = () => {
       const payload: LeadPayload = {
         nome: values.nome,
         whatsapp: values.whatsapp,
-        email: values.email || undefined,
-        petNome: values.petNome || undefined,
-        petEspecie: values.petEspecie,
         motivo: values.motivo,
-        unidade: values.unidade,
+        petEspecie: "",
+        unidade: "",
         mensagem: values.mensagem || undefined,
       };
       await submitLead(payload);
@@ -145,9 +105,7 @@ const LeadForm = () => {
       setSubmitted(true);
     } catch (err) {
       console.error(err);
-      setSubmitError(
-        "Não conseguimos enviar agora. Por favor, chame no WhatsApp — atendemos na hora.",
-      );
+      setSubmitError("Não conseguimos enviar agora. Chame no WhatsApp — atendemos na hora.");
     }
   };
 
@@ -164,8 +122,7 @@ const LeadForm = () => {
         <div
           className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
           style={{
-            background:
-              "linear-gradient(135deg, hsl(155 83% 45%) 0%, hsl(155 83% 28%) 100%)",
+            background: "linear-gradient(135deg, hsl(155 83% 45%) 0%, hsl(155 83% 28%) 100%)",
             boxShadow: "0 12px 32px -10px hsla(155, 83%, 40%, 0.55)",
           }}
         >
@@ -175,8 +132,7 @@ const LeadForm = () => {
           Recebemos sua solicitação.
         </h3>
         <p className="text-white/60 text-sm md:text-base leading-relaxed mb-6">
-          Nossa equipe vai entrar em contato em instantes pelo WhatsApp que você
-          informou. Se for urgente, fale agora mesmo com a gente:
+          Nossa equipe vai entrar em contato em instantes pelo WhatsApp. Se for urgente, fale agora:
         </p>
         <a
           href={`https://wa.me/${WA_NUMBER}?text=${waText}`}
@@ -184,8 +140,7 @@ const LeadForm = () => {
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full font-semibold text-white text-sm"
           style={{
-            background:
-              "linear-gradient(135deg, hsl(155 83% 38%) 0%, hsl(155 83% 24%) 100%)",
+            background: "linear-gradient(135deg, hsl(155 83% 38%) 0%, hsl(155 83% 24%) 100%)",
             boxShadow: "0 10px 28px -8px hsla(155, 83%, 40%, 0.55)",
           }}
         >
@@ -206,58 +161,35 @@ const LeadForm = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 90, damping: 20, delay: 0.15 }}
       className="rounded-2xl p-6 md:p-8 border border-white/10 relative overflow-hidden"
-      style={{
-        backgroundColor: "hsl(170 35% 10% / 0.92)",
-        boxShadow: "0 40px 80px -30px rgba(0,0,0,0.6)",
-      }}
+      style={{ backgroundColor: "hsl(170 35% 10% / 0.92)", boxShadow: "0 40px 80px -30px rgba(0,0,0,0.6)" }}
     >
-      {/* Glow decorativo */}
-      <div
-        aria-hidden
-        className="absolute -top-20 -right-20 w-56 h-56 rounded-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, hsl(155 83% 40% / 0.22) 0%, transparent 70%)",
-        }}
-      />
+      <div aria-hidden className="absolute -top-20 -right-20 w-56 h-56 rounded-full pointer-events-none" style={{ background: "radial-gradient(circle, hsl(155 83% 40% / 0.22) 0%, transparent 70%)" }} />
 
       <div className="relative">
         <div className="flex items-center gap-2 mb-5">
           <span
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase border"
-            style={{
-              backgroundColor: "hsl(155 83% 30% / 0.14)",
-              borderColor: "hsl(155 83% 30% / 0.32)",
-              color: "hsl(155 83% 65%)",
-            }}
+            style={{ backgroundColor: "hsl(155 83% 30% / 0.14)", borderColor: "hsl(155 83% 30% / 0.32)", color: "hsl(155 83% 65%)" }}
           >
             <span className="relative flex w-1.5 h-1.5">
-              <span
-                className="absolute inline-flex h-full w-full rounded-full animate-ping"
-                style={{ backgroundColor: "hsl(155 83% 50%)" }}
-              />
-              <span
-                className="relative w-1.5 h-1.5 rounded-full"
-                style={{ backgroundColor: "hsl(155 83% 55%)" }}
-              />
+              <span className="absolute inline-flex h-full w-full rounded-full animate-ping" style={{ backgroundColor: "hsl(155 83% 50%)" }} />
+              <span className="relative w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "hsl(155 83% 55%)" }} />
             </span>
             Resposta em minutos
           </span>
         </div>
 
         <h2 className="font-display text-2xl md:text-[28px] font-bold text-white mb-1.5 tracking-tight">
-          Agende o atendimento do seu pet
+          Deixe seus dados
         </h2>
         <p className="text-white/50 text-sm mb-6">
-          Preencha abaixo — nossa equipe liga ou chama no WhatsApp em seguida.
+          Preencha — retornamos pelo WhatsApp em minutos.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {/* Nome */}
-          <div className="md:col-span-2">
-            <label htmlFor="nome" className={labelBase}>
-              Seu nome *
-            </label>
+          <div>
+            <label htmlFor="nome" className={labelBase}>Seu nome *</label>
             <input
               id="nome"
               type="text"
@@ -271,9 +203,7 @@ const LeadForm = () => {
 
           {/* WhatsApp */}
           <div>
-            <label htmlFor="whatsapp" className={labelBase}>
-              WhatsApp *
-            </label>
+            <label htmlFor="whatsapp" className={labelBase}>WhatsApp *</label>
             <input
               id="whatsapp"
               type="tel"
@@ -282,79 +212,14 @@ const LeadForm = () => {
               placeholder="(81) 9 0000-0000"
               className={fieldBase}
               value={whatsappValue}
-              onChange={(e) =>
-                setValue("whatsapp", formatPhone(e.target.value), {
-                  shouldValidate: true,
-                })
-              }
+              onChange={(e) => setValue("whatsapp", formatPhone(e.target.value), { shouldValidate: true })}
             />
-            {errors.whatsapp && (
-              <p className={errorText}>{errors.whatsapp.message}</p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className={labelBase}>
-              E-mail (opcional)
-            </label>
-            <input
-              id="email"
-              type="email"
-              autoComplete="email"
-              placeholder="seu@email.com"
-              className={fieldBase}
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className={errorText}>{errors.email.message}</p>
-            )}
-          </div>
-
-          {/* Pet nome */}
-          <div>
-            <label htmlFor="petNome" className={labelBase}>
-              Nome do pet
-            </label>
-            <input
-              id="petNome"
-              type="text"
-              placeholder="Opcional"
-              autoComplete="off"
-              className={fieldBase}
-              {...register("petNome")}
-            />
-          </div>
-
-          {/* Espécie */}
-          <div>
-            <label htmlFor="petEspecie" className={labelBase}>
-              Espécie *
-            </label>
-            <select
-              id="petEspecie"
-              className={fieldBase + " appearance-none cursor-pointer"}
-              style={selectChevronStyle}
-              autoComplete="off"
-              {...register("petEspecie")}
-            >
-              <option value="" style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>Selecione</option>
-              {ESPECIES.map((e) => (
-                <option key={e} value={e} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
-                  {e}
-                </option>
-              ))}
-            </select>
-            {errors.petEspecie && (
-              <p className={errorText}>{errors.petEspecie.message}</p>
-            )}
+            {errors.whatsapp && <p className={errorText}>{errors.whatsapp.message}</p>}
           </div>
 
           {/* Motivo */}
-          <div className="md:col-span-2">
-            <label htmlFor="motivo" className={labelBase}>
-              Motivo do contato *
-            </label>
+          <div>
+            <label htmlFor="motivo" className={labelBase}>Motivo *</label>
             <select
               id="motivo"
               className={fieldBase + " appearance-none cursor-pointer"}
@@ -362,55 +227,22 @@ const LeadForm = () => {
               autoComplete="off"
               {...register("motivo")}
             >
-              <option value="">Selecione</option>
+              <option value="" style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>Selecione</option>
               {MOTIVOS.map((m) => (
-                <option key={m} value={m} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
-                  {m}
-                </option>
+                <option key={m} value={m} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>{m}</option>
               ))}
             </select>
-            {errors.motivo && (
-              <p className={errorText}>{errors.motivo.message}</p>
-            )}
+            {errors.motivo && <p className={errorText}>{errors.motivo.message}</p>}
           </div>
 
-          {/* Unidade */}
-          <div className="md:col-span-2">
-            <label htmlFor="unidade" className={labelBase}>
-              Unidade de preferência *
-            </label>
-            <select
-              id="unidade"
-              className={fieldBase + " appearance-none cursor-pointer"}
-              style={selectChevronStyle}
-              autoComplete="off"
-              {...register("unidade")}
-            >
-              <option value="">Selecione</option>
-              {UNIDADES.map((u) => (
-                <option key={u} value={u} style={{ backgroundColor: "hsl(170 35% 10%)", color: "white" }}>
-                  {u}
-                </option>
-              ))}
-            </select>
-            {errors.unidade && (
-              <p className={errorText}>{errors.unidade.message}</p>
-            )}
-          </div>
-
-          {/* Mensagem */}
-          <div className="md:col-span-2">
-            <label htmlFor="mensagem" className={labelBase}>
-              Conte rapidamente (opcional)
-            </label>
+          {/* Mensagem (opcional) */}
+          <div>
+            <label htmlFor="mensagem" className={labelBase}>Observação (opcional)</label>
             <textarea
               id="mensagem"
-              rows={3}
-              placeholder="Sintomas, dúvidas, melhor horário para contato…"
-              className={
-                "w-full px-4 py-3 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 " +
-                "focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors resize-none"
-              }
+              rows={2}
+              placeholder="Sintomas, dúvidas, horário preferido…"
+              className={"w-full px-4 py-3 rounded-xl border bg-white/[0.04] border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-[hsl(155_83%_50%)] focus:bg-white/[0.06] transition-colors resize-none"}
               {...register("mensagem")}
             />
           </div>
@@ -423,11 +255,7 @@ const LeadForm = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               className="mt-5 px-4 py-3 rounded-xl text-sm border"
-              style={{
-                backgroundColor: "hsl(12 76% 20% / 0.35)",
-                borderColor: "hsl(12 76% 56% / 0.4)",
-                color: "hsl(12 90% 80%)",
-              }}
+              style={{ backgroundColor: "hsl(12 76% 20% / 0.35)", borderColor: "hsl(12 76% 56% / 0.4)", color: "hsl(12 90% 80%)" }}
             >
               {submitError}
             </motion.div>
@@ -442,51 +270,21 @@ const LeadForm = () => {
           transition={{ type: "spring", stiffness: 340, damping: 18 }}
           className="mt-6 relative w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-full font-semibold text-white text-[15px] overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
           style={{
-            background:
-              "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
-            boxShadow:
-              "0 14px 34px -10px hsla(155, 83%, 40%, 0.6), inset 0 1px 0 rgba(255,255,255,0.18)",
+            background: "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
+            boxShadow: "0 14px 34px -10px hsla(155, 83%, 40%, 0.6), inset 0 1px 0 rgba(255,255,255,0.18)",
           }}
         >
-          {/* Pulsing ring halo (sempre ativo pra chamar atenção) */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-full opacity-70"
-            style={{
-              boxShadow: "0 0 0 0 hsla(155, 83%, 50%, 0.6)",
-              animation: "submit-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-            }}
-          />
-
-          {/* Sheen sweep on hover */}
-          <span
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-full overflow-hidden"
-          >
-            <span
-              className="absolute top-0 left-[-60%] w-[55%] h-full skew-x-[-18deg] opacity-0 group-hover:opacity-100 group-hover:translate-x-[260%] transition-all duration-[900ms] ease-out"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%)",
-              }}
-            />
+          <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full opacity-70" style={{ boxShadow: "0 0 0 0 hsla(155, 83%, 50%, 0.6)", animation: "submit-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite" }} />
+          <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
+            <span className="absolute top-0 left-[-60%] w-[55%] h-full skew-x-[-18deg] opacity-0 group-hover:opacity-100 group-hover:translate-x-[260%] transition-all duration-[900ms] ease-out" style={{ background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%)" }} />
           </span>
-
-          {/* Conteúdo */}
           <span className="relative inline-flex items-center gap-2.5">
             {isSubmitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Enviando…
-              </>
+              <><Loader2 className="w-4 h-4 animate-spin" />Enviando…</>
             ) : (
               <>
                 Quero ser contatado
-                <motion.span
-                  className="inline-flex"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                >
+                <motion.span className="inline-flex" animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}>
                   <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
                 </motion.span>
               </>
