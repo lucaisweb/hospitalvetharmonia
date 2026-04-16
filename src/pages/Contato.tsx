@@ -18,6 +18,7 @@ import {
 import ConversionNav from "@/components/landing/conversion/ConversionNav";
 import ConversionFooter from "@/components/landing/conversion/ConversionFooter";
 import LeadForm from "@/components/landing/conversion/LeadForm";
+import SeoFaq, { buildFaqJsonLd, type FaqItem } from "@/components/landing/SeoFaq";
 import { CountUp } from "@/components/ui/count-up";
 import { useSeo } from "@/hooks/use-seo";
 import recifeBg from "@/assets/hero-hvh.png";
@@ -76,6 +77,64 @@ const TESTIMONIALS = [
     stars: 5,
   },
 ];
+
+/* ── FAQs /contato — termos de busca urgência + geral ── */
+
+const CONTATO_FAQS: FaqItem[] = [
+  {
+    q: "O Hospital Veterinário Harmonia atende emergências e urgências 24 horas?",
+    a: "Sim. O Hospital Veterinário Harmonia funciona 24 horas por dia, 7 dias por semana, incluindo feriados e finais de semana. Nossas três unidades em Recife — Casa Forte, Madalena e Boa Viagem — possuem equipe veterinária de plantão pronta para atender urgências e emergências a qualquer hora do dia ou da noite.",
+  },
+  {
+    q: "Qual o telefone do pronto-socorro veterinário do Hospital Harmonia em Recife?",
+    a: "O telefone para urgências e agendamentos é (81) 3126-7555, válido para todas as três unidades. Você também pode chamar pelo WhatsApp no mesmo número. O atendimento é imediato — não é necessário agendar para casos de emergência veterinária.",
+  },
+  {
+    q: "Onde fica o hospital veterinário 24 horas mais perto de mim em Recife?",
+    a: "O Hospital Veterinário Harmonia possui três unidades estratégicas em Recife: Casa Forte (Estr. do Encanamento, 585), Madalena (Av. Visc. de Albuquerque, 894) e Boa Viagem (Av. Eng. Domingos Ferreira, 3628). Todas funcionam 24 horas e atendem urgências veterinárias imediatamente.",
+  },
+  {
+    q: "O Hospital Harmonia atende de madrugada e nos finais de semana?",
+    a: "Sim, o atendimento veterinário é ininterrupto — 24 horas, inclusive madrugada, sábados, domingos e feriados. Para emergências veterinárias noturnas em Recife, basta ligar para (81) 3126-7555 ou ir diretamente a qualquer uma das nossas unidades.",
+  },
+  {
+    q: "Quais especialidades veterinárias o Hospital Harmonia oferece?",
+    a: "Oferecemos 24 especialidades veterinárias: clínica geral, cirurgia, ortopedia, cardiologia, neurologia, oncologia, dermatologia, oftalmologia, endocrinologia, nefrologia, pneumologia, hematologia, gastroenterologia, nutrologia, fisioterapia, acupuntura, reprodução, diagnóstico por imagem (raio-X, ultrassom), laboratório próprio, vacinação, atendimento a animais silvestres, terapia celular, internação e urgência 24h.",
+  },
+  {
+    q: "Preciso agendar ou posso ir direto na emergência veterinária?",
+    a: "Para urgências e emergências veterinárias, não é necessário agendamento — basta ir diretamente a qualquer unidade do Hospital Harmonia, 24 horas. Para consultas de rotina, check-ups e especialistas, recomendamos agendar pelo WhatsApp (81) 3126-7555 ou pelo formulário nesta página para garantir o horário.",
+  },
+  {
+    q: "O Hospital Harmonia atende gatos, aves, roedores e animais silvestres?",
+    a: "Sim. Além de cães e gatos, o Hospital Veterinário Harmonia atende aves, roedores, répteis e animais silvestres. Temos veterinários especializados em diferentes espécies para garantir o melhor cuidado ao seu pet, seja qual for.",
+  },
+  {
+    q: "O hospital veterinário tem centro cirúrgico, internação e diagnóstico por imagem?",
+    a: "Sim, o Hospital Harmonia possui estrutura hospitalar completa: centro cirúrgico equipado, setor de internação com monitoramento, aparelhos de raio-X e ultrassom para diagnóstico por imagem, e laboratório próprio para resultados rápidos de exames de sangue e outros.",
+  },
+  {
+    q: "Como agendar uma consulta veterinária no Hospital Harmonia?",
+    a: "Você pode agendar uma consulta de três formas: pelo WhatsApp (81) 3126-7555, ligando para o mesmo número, ou preenchendo o formulário nesta página. Nossa equipe retorna em minutos para confirmar o horário na unidade mais próxima de você.",
+  },
+  {
+    q: "Quanto tempo o Hospital Harmonia tem de experiência em Recife?",
+    a: "O Hospital Veterinário Harmonia é referência em medicina veterinária em Recife há mais de 32 anos. Com três unidades na cidade e uma equipe de especialistas altamente qualificados, já cuidamos de milhares de pets e famílias recifenses.",
+  },
+];
+
+const CONTATO_SEO_TEXT =
+  "Hospital Veterinário Harmonia — atendimento veterinário 24 horas em Recife, Pernambuco. " +
+  "Pronto-socorro veterinário, emergência veterinária, urgência animal, clínica veterinária 24h. " +
+  "Unidades em Casa Forte, Madalena e Boa Viagem. Veterinário de madrugada, veterinário noturno, " +
+  "veterinário fim de semana, veterinário feriado em Recife. Especialidades: cardiologia veterinária, " +
+  "ortopedia veterinária, neurologia veterinária, oncologia veterinária, dermatologia veterinária, " +
+  "cirurgia veterinária, oftalmologia veterinária, endocrinologia veterinária, nefrologia veterinária. " +
+  "Diagnóstico por imagem: raio-X veterinário, ultrassom veterinário, laboratório veterinário. " +
+  "Veterinário para cachorro, veterinário para gato, veterinário para aves, veterinário para animais silvestres. " +
+  "Centro cirúrgico veterinário, internação veterinária, vacinação de cães e gatos, consulta veterinária Recife. " +
+  "Melhor hospital veterinário de Recife, hospital veterinário perto de mim, hospital pet 24 horas Recife PE. " +
+  "Agende sua consulta pelo WhatsApp (81) 3126-7555 ou preencha o formulário acima.";
 
 const containerVariants = {
   hidden: {},
@@ -157,7 +216,8 @@ const Contato = () => {
     description:
       "Atendimento veterinário de urgência 24 horas em Recife. 3 unidades, equipe pronta, centro cirúrgico próprio. Ligue agora: (81) 3126-7555 ou agende pelo formulário.",
     canonical: "https://hospitalvetharmonia.com.br/contato",
-    jsonLd: {
+    jsonLd: [
+    {
       "@context": "https://schema.org",
       "@type": "VeterinaryCare",
       name: "Hospital Veterinário Harmonia",
@@ -179,6 +239,8 @@ const Contato = () => {
         reviewCount: "2000",
       },
     },
+    buildFaqJsonLd(CONTATO_FAQS),
+    ],
   });
 
   const heroRef = useRef<HTMLElement>(null);
@@ -498,6 +560,14 @@ const Contato = () => {
             </div>
           </div>
         </section>
+
+        {/* ═══ FAQ SEO ═══ */}
+        <SeoFaq
+          heading="Perguntas frequentes"
+          subheading="Dúvidas comuns"
+          faqs={CONTATO_FAQS}
+          seoText={CONTATO_SEO_TEXT}
+        />
 
         {/* ═══ CTA FINAL ═══ */}
         <section
