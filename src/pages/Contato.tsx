@@ -22,6 +22,7 @@ import SeoFaq, { buildFaqJsonLd, type FaqItem } from "@/components/landing/SeoFa
 import { CountUp } from "@/components/ui/count-up";
 import { useSeo } from "@/hooks/use-seo";
 import recifeBg from "@/assets/hero-hvh.png";
+import logoFull from "@/assets/logo-full.png";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
 /* ── Data ── */
@@ -321,6 +322,29 @@ const Contato = () => {
                         </span>
                         Urgência 24 horas &bull; 3 unidades em Recife
                       </span>
+                    </motion.div>
+
+                    {/* Logo + nome do hospital — proeminente */}
+                    <motion.div variants={itemVariants} className="flex items-center gap-4 mb-8">
+                      <img
+                        src={logoFull}
+                        alt="Hospital Veterinário Harmonia"
+                        className="h-14 md:h-20 brightness-0 invert drop-shadow-lg"
+                      />
+                      <div className="leading-tight">
+                        <p
+                          className="text-xs md:text-sm font-bold tracking-widest uppercase"
+                          style={{ color: "hsl(155 83% 55%)" }}
+                        >
+                          Hospital Veterinário
+                        </p>
+                        <p className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-white leading-none">
+                          Harmonia
+                        </p>
+                        <p className="text-[10px] md:text-xs font-medium text-white/40 mt-0.5">
+                          Recife &bull; Desde 1992
+                        </p>
+                      </div>
                     </motion.div>
 
                     {/* Headline */}
