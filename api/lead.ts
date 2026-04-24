@@ -24,7 +24,25 @@ type LeadBody = {
   origem?: string;
   userAgent?: string;
   timestamp?: string;
-  // Honeypot — campos que humanos não veem. Se preenchido, é bot.
+
+  /* Tracking / atribuição */
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  utm_term?: string;
+  fbclid?: string;
+  gclid?: string;
+  ttclid?: string;
+  msclkid?: string;
+  referrer?: string;
+  landingPath?: string;
+  landingUrl?: string;
+  firstVisit?: string;
+
+  intent?: string;
+
+  /* Honeypot — campos que humanos não veem. Se preenchido, é bot. */
   _hp?: string;
 };
 
@@ -125,6 +143,22 @@ export default async function handler(
       clean(body.userAgent) || (req.headers["user-agent"] as string) || "",
     timestamp: clean(body.timestamp) || new Date().toISOString(),
     ip,
+
+    /* Tracking — repassa tudo pra planilha */
+    utm_source: clean(body.utm_source),
+    utm_medium: clean(body.utm_medium),
+    utm_campaign: clean(body.utm_campaign),
+    utm_content: clean(body.utm_content),
+    utm_term: clean(body.utm_term),
+    fbclid: clean(body.fbclid),
+    gclid: clean(body.gclid),
+    ttclid: clean(body.ttclid),
+    msclkid: clean(body.msclkid),
+    referrer: clean(body.referrer),
+    landingPath: clean(body.landingPath),
+    landingUrl: clean(body.landingUrl),
+    firstVisit: clean(body.firstVisit),
+    intent: clean(body.intent),
   };
 
   try {

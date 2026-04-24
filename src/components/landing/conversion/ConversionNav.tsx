@@ -8,21 +8,18 @@ import {
 } from "framer-motion";
 import { Phone } from "lucide-react";
 import logoFull from "@/assets/logo-full.png";
+import { useLeadCapture } from "@/components/landing/conversion/LeadCaptureDialog";
 
-const WA_EMERGENCY =
-  "https://wa.me/558131267555?text=" +
-  encodeURIComponent("Olá! Estou com uma URGÊNCIA e preciso de atendimento para o meu pet.");
-const TEL = "tel:558131267555";
-
-/* ── Magnetic CTA ── */
+/* ── Magnetic CTA que abre o modal ── */
 const MagneticCta = () => {
-  const ref = useRef<HTMLAnchorElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 220, damping: 16 });
   const sy = useSpring(y, { stiffness: 220, damping: 16 });
+  const { open } = useLeadCapture();
 
-  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
     x.set((e.clientX - r.left - r.width / 2) * 0.3);
@@ -31,41 +28,25 @@ const MagneticCta = () => {
   const onLeave = () => { x.set(0); y.set(0); };
 
   return (
-    <>
-      {/* Desktop: WhatsApp urgência */}
-      <motion.a
-        ref={ref}
-        href={WA_EMERGENCY}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          x: sx,
-          y: sy,
-          background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
-          boxShadow: "0 4px 16px -4px hsla(12, 76%, 56%, 0.5)",
-        }}
-        onMouseMove={onMove}
-        onMouseLeave={onLeave}
-        whileTap={{ scale: 0.95 }}
-        className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white whitespace-nowrap"
-      >
-        <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
-        Urgência 24h
-      </motion.a>
-
-      {/* Mobile: tel direto */}
-      <a
-        href={TEL}
-        className="inline-flex md:hidden items-center gap-2 px-4 py-2.5 rounded-full text-xs font-bold text-white"
-        style={{
-          background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
-          boxShadow: "0 4px 16px -4px hsla(12, 76%, 56%, 0.5)",
-        }}
-      >
-        <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
-        Urgência 24h
-      </a>
-    </>
+    <motion.button
+      ref={ref}
+      type="button"
+      onClick={() => open({ intent: "urgencia", preselectMotivo: "Urgência / Emergência" })}
+      style={{
+        x: sx,
+        y: sy,
+        background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 50%) 100%)",
+        boxShadow: "0 4px 16px -4px hsla(12, 76%, 56%, 0.5)",
+      }}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      whileTap={{ scale: 0.95 }}
+      className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 rounded-full text-xs md:text-sm font-bold text-white whitespace-nowrap"
+    >
+      <Phone className="w-3.5 h-3.5" strokeWidth={2.5} />
+      <span className="hidden sm:inline">Urgência 24h</span>
+      <span className="sm:hidden">Urgência</span>
+    </motion.button>
   );
 };
 

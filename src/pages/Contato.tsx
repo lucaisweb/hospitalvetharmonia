@@ -7,54 +7,45 @@ import {
   useMotionValue,
 } from "framer-motion";
 import {
-  Phone,
   MapPin,
-  Clock,
-  Navigation,
   ShieldCheck,
   Star,
   ArrowRight,
+  MessageCircle,
 } from "lucide-react";
 import ConversionNav from "@/components/landing/conversion/ConversionNav";
 import ConversionFooter from "@/components/landing/conversion/ConversionFooter";
-import LeadForm from "@/components/landing/conversion/LeadForm";
 import SeoFaq, { buildFaqJsonLd, type FaqItem } from "@/components/landing/SeoFaq";
+import {
+  LeadCaptureProvider,
+  useLeadCapture,
+  type DialogIntent,
+} from "@/components/landing/conversion/LeadCaptureDialog";
 import { CountUp } from "@/components/ui/count-up";
 import { useSeo } from "@/hooks/use-seo";
 import recifeBg from "@/assets/hero-hvh.png";
 import logoFull from "@/assets/logo-full.png";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
 
-/* ── Data ── */
-
-const WA_EMERGENCY =
-  "https://wa.me/558131267555?text=" +
-  encodeURIComponent("Olá! Estou com uma URGÊNCIA e preciso de atendimento para o meu pet.");
-
-const WA_GENERAL =
-  "https://wa.me/558131267555?text=" +
-  encodeURIComponent("Olá! Vim pelo site do Hospital Harmonia e gostaria de mais informações.");
-
-const TEL = "tel:558131267555";
+/* ══════════════════════════════════════════════════════════════════════
+   Data
+   ══════════════════════════════════════════════════════════════════════ */
 
 const UNITS = [
   {
     name: "Casa Forte",
     area: "Recife Norte",
-    address: "Estr. do Encanamento, 585",
-    mapsLink: "https://maps.app.goo.gl/1xqdttkc6Avn7BNT8",
+    address: "Estr. do Encanamento, 585 — Casa Forte",
   },
   {
     name: "Madalena",
     area: "Zona Oeste",
-    address: "Av. Visc. de Albuquerque, 894",
-    mapsLink: "https://maps.app.goo.gl/MdBiGuUVSyQ6LTy58",
+    address: "Av. Visc. de Albuquerque, 894 — Madalena",
   },
   {
     name: "Boa Viagem",
     area: "Zona Sul",
-    address: "Av. Eng. Domingos Ferreira, 3628",
-    mapsLink: "https://maps.app.goo.gl/xt4EtizyvPAiBB538",
+    address: "Av. Eng. Domingos Ferreira, 3628 — Boa Viagem",
   },
 ];
 
@@ -79,24 +70,22 @@ const TESTIMONIALS = [
   },
 ];
 
-/* ── FAQs /contato — termos de busca urgência + geral ── */
-
 const CONTATO_FAQS: FaqItem[] = [
   {
     q: "O Hospital Veterinário Harmonia atende emergências e urgências 24 horas?",
     a: "Sim. O Hospital Veterinário Harmonia funciona 24 horas por dia, 7 dias por semana, incluindo feriados e finais de semana. Nossas três unidades em Recife — Casa Forte, Madalena e Boa Viagem — possuem equipe veterinária de plantão pronta para atender urgências e emergências a qualquer hora do dia ou da noite.",
   },
   {
-    q: "Qual o telefone do pronto-socorro veterinário do Hospital Harmonia em Recife?",
-    a: "O telefone para urgências e agendamentos é (81) 3126-7555, válido para todas as três unidades. Você também pode chamar pelo WhatsApp no mesmo número. O atendimento é imediato — não é necessário agendar para casos de emergência veterinária.",
+    q: "Como entro em contato com o pronto-socorro veterinário do Hospital Harmonia?",
+    a: "Preencha o formulário nesta página — seus dados são enviados direto para nossa equipe e você é redirecionado ao WhatsApp com a mensagem já pronta. Isso agiliza o atendimento porque nossa equipe já tem seu nome, WhatsApp e o motivo antes mesmo de você escrever.",
   },
   {
     q: "Onde fica o hospital veterinário 24 horas mais perto de mim em Recife?",
-    a: "O Hospital Veterinário Harmonia possui três unidades estratégicas em Recife: Casa Forte (Estr. do Encanamento, 585), Madalena (Av. Visc. de Albuquerque, 894) e Boa Viagem (Av. Eng. Domingos Ferreira, 3628). Todas funcionam 24 horas e atendem urgências veterinárias imediatamente.",
+    a: "O Hospital Veterinário Harmonia possui três unidades estratégicas em Recife: Casa Forte (Estr. do Encanamento, 585 — Recife Norte), Madalena (Av. Visc. de Albuquerque, 894 — Zona Oeste) e Boa Viagem (Av. Eng. Domingos Ferreira, 3628 — Zona Sul). Todas funcionam 24 horas.",
   },
   {
     q: "O Hospital Harmonia atende de madrugada e nos finais de semana?",
-    a: "Sim, o atendimento veterinário é ininterrupto — 24 horas, inclusive madrugada, sábados, domingos e feriados. Para emergências veterinárias noturnas em Recife, basta ligar para (81) 3126-7555 ou ir diretamente a qualquer uma das nossas unidades.",
+    a: "Sim, o atendimento veterinário é ininterrupto — 24 horas, inclusive madrugada, sábados, domingos e feriados. Para emergências veterinárias noturnas em Recife, preencha o formulário e nossa equipe te recebe no WhatsApp imediatamente.",
   },
   {
     q: "Quais especialidades veterinárias o Hospital Harmonia oferece?",
@@ -104,19 +93,19 @@ const CONTATO_FAQS: FaqItem[] = [
   },
   {
     q: "Preciso agendar ou posso ir direto na emergência veterinária?",
-    a: "Para urgências e emergências veterinárias, não é necessário agendamento — basta ir diretamente a qualquer unidade do Hospital Harmonia, 24 horas. Para consultas de rotina, check-ups e especialistas, recomendamos agendar pelo WhatsApp (81) 3126-7555 ou pelo formulário nesta página para garantir o horário.",
+    a: "Para urgências, preencha o formulário com motivo 'Urgência / Emergência' — nossa equipe te atende pelo WhatsApp em segundos, orientando se precisa ir direto a uma unidade ou se já dá pra resolver pelo telefone. Para consultas, selecione 'Consulta / Check-up' e agendamos o melhor horário.",
   },
   {
     q: "O Hospital Harmonia atende gatos, aves, roedores e animais silvestres?",
-    a: "Sim. Além de cães e gatos, o Hospital Veterinário Harmonia atende aves, roedores, répteis e animais silvestres. Temos veterinários especializados em diferentes espécies para garantir o melhor cuidado ao seu pet, seja qual for.",
+    a: "Sim. Além de cães e gatos, o Hospital Veterinário Harmonia atende aves, roedores, répteis e animais silvestres. Temos veterinários especializados em diferentes espécies.",
   },
   {
     q: "O hospital veterinário tem centro cirúrgico, internação e diagnóstico por imagem?",
-    a: "Sim, o Hospital Harmonia possui estrutura hospitalar completa: centro cirúrgico equipado, setor de internação com monitoramento, aparelhos de raio-X e ultrassom para diagnóstico por imagem, e laboratório próprio para resultados rápidos de exames de sangue e outros.",
+    a: "Sim, o Hospital Harmonia possui estrutura hospitalar completa: centro cirúrgico equipado, setor de internação com monitoramento, aparelhos de raio-X e ultrassom para diagnóstico por imagem, e laboratório próprio para resultados rápidos.",
   },
   {
     q: "Como agendar uma consulta veterinária no Hospital Harmonia?",
-    a: "Você pode agendar uma consulta de três formas: pelo WhatsApp (81) 3126-7555, ligando para o mesmo número, ou preenchendo o formulário nesta página. Nossa equipe retorna em minutos para confirmar o horário na unidade mais próxima de você.",
+    a: "Basta preencher o formulário nesta página. Ao enviar, você recebe um link do WhatsApp com sua mensagem já pronta, e nossa equipe confirma em minutos o melhor horário e unidade. Muito mais rápido que um telefonema tradicional.",
   },
   {
     q: "Quanto tempo o Hospital Harmonia tem de experiência em Recife?",
@@ -135,7 +124,11 @@ const CONTATO_SEO_TEXT =
   "Veterinário para cachorro, veterinário para gato, veterinário para aves, veterinário para animais silvestres. " +
   "Centro cirúrgico veterinário, internação veterinária, vacinação de cães e gatos, consulta veterinária Recife. " +
   "Melhor hospital veterinário de Recife, hospital veterinário perto de mim, hospital pet 24 horas Recife PE. " +
-  "Agende sua consulta pelo WhatsApp (81) 3126-7555 ou preencha o formulário acima.";
+  "Preencha o formulário acima pra agilizar seu atendimento — respondemos pelo WhatsApp em segundos.";
+
+/* ══════════════════════════════════════════════════════════════════════
+   Animations
+   ══════════════════════════════════════════════════════════════════════ */
 
 const containerVariants = {
   hidden: {},
@@ -151,31 +144,31 @@ const itemVariants = {
   },
 };
 
-/* ── Magnetic Button ── */
-const MagneticButton = ({
-  href,
+/* ══════════════════════════════════════════════════════════════════════
+   Botão Magnético — agora dispara o modal (não vai mais direto pro WA)
+   ══════════════════════════════════════════════════════════════════════ */
+
+const MagneticCtaButton = ({
+  intent,
+  preselectMotivo,
   className,
   style,
   children,
-  onClick,
-  target,
-  rel,
 }: {
-  href?: string;
+  intent: DialogIntent;
+  preselectMotivo?: string;
   className?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-  target?: string;
-  rel?: string;
 }) => {
-  const ref = useRef<HTMLAnchorElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 220, damping: 16 });
   const sy = useSpring(y, { stiffness: 220, damping: 16 });
+  const { open } = useLeadCapture();
 
-  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
     x.set((e.clientX - r.left - r.width / 2) * 0.28);
@@ -184,66 +177,26 @@ const MagneticButton = ({
   const onLeave = () => { x.set(0); y.set(0); };
 
   return (
-    <motion.a
+    <motion.button
       ref={ref}
-      href={href}
-      target={target}
-      rel={rel}
+      type="button"
+      onClick={() => open({ intent, preselectMotivo })}
       style={{ x: sx, y: sy, ...style }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      onClick={onClick}
       whileTap={{ scale: 0.96 }}
       className={className}
     >
       {children}
-    </motion.a>
+    </motion.button>
   );
 };
 
-/* ── WhatsApp SVG icon ── */
-const WhatsAppIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.325 0-4.47-.754-6.213-2.032l-.354-.27-3.666 1.228 1.228-3.666-.27-.354A9.935 9.935 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
-  </svg>
-);
+/* ══════════════════════════════════════════════════════════════════════
+   Conteúdo principal
+   ══════════════════════════════════════════════════════════════════════ */
 
-/* ══════════════════════════════════════════════════════════════════════ */
-
-const Contato = () => {
-  useSeo({
-    title: "Urgência Veterinária 24h em Recife | Hospital Harmonia",
-    description:
-      "Atendimento veterinário de urgência 24 horas em Recife. 3 unidades, equipe pronta, centro cirúrgico próprio. Ligue agora: (81) 3126-7555 ou agende pelo formulário.",
-    canonical: "https://hospitalvetharmonia.com.br/contato",
-    jsonLd: [
-    {
-      "@context": "https://schema.org",
-      "@type": "VeterinaryCare",
-      name: "Hospital Veterinário Harmonia",
-      description:
-        "Hospital veterinário com atendimento de urgência 24h em Recife. 3 unidades, 24 especialidades, centro cirúrgico e diagnóstico por imagem.",
-      url: "https://hospitalvetharmonia.com.br/contato",
-      telephone: "+55-81-3126-7555",
-      priceRange: "$$",
-      openingHours: "Mo-Su 00:00-23:59",
-      areaServed: { "@type": "City", name: "Recife" },
-      address: [
-        { "@type": "PostalAddress", streetAddress: "Estr. do Encanamento, 585", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
-        { "@type": "PostalAddress", streetAddress: "Av. Visc. de Albuquerque, 894", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
-        { "@type": "PostalAddress", streetAddress: "Av. Eng. Domingos Ferreira, 3628", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
-      ],
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.9",
-        reviewCount: "2000",
-      },
-    },
-    buildFaqJsonLd(CONTATO_FAQS),
-    ],
-  });
-
+const ContatoContent = () => {
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({
     target: heroRef,
@@ -272,7 +225,7 @@ const Contato = () => {
       <div className="relative z-10">
         <ConversionNav />
 
-        {/* ═══ HERO — Urgência 24h ═══ */}
+        {/* ═══ HERO ═══ */}
         <section ref={heroRef} className="relative overflow-hidden min-h-[100dvh] flex flex-col">
           {/* Background parallax */}
           <motion.div style={{ y: bgY }} className="absolute inset-0 z-0 will-change-transform">
@@ -299,7 +252,6 @@ const Contato = () => {
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
           />
 
-          {/* Conteúdo hero */}
           <motion.div style={{ y: contentY }} className="relative z-10 flex-1 flex items-center will-change-transform">
             <div className="max-w-6xl mx-auto w-full px-6 lg:px-10 py-28 pt-36 lg:pt-40">
               <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-2xl">
@@ -324,7 +276,7 @@ const Contato = () => {
                       </span>
                     </motion.div>
 
-                    {/* Logo + nome do hospital — proeminente */}
+                    {/* Logo + nome */}
                     <motion.div variants={itemVariants} className="flex items-center gap-4 mb-8">
                       <img
                         src={logoFull}
@@ -332,10 +284,7 @@ const Contato = () => {
                         className="h-14 md:h-20 brightness-0 invert drop-shadow-lg"
                       />
                       <div className="leading-tight">
-                        <p
-                          className="text-xs md:text-sm font-bold tracking-widest uppercase"
-                          style={{ color: "hsl(155 83% 55%)" }}
-                        >
+                        <p className="text-xs md:text-sm font-bold tracking-widest uppercase" style={{ color: "hsl(155 83% 55%)" }}>
                           Hospital Veterinário
                         </p>
                         <p className="text-2xl md:text-3xl font-display font-extrabold tracking-tight text-white leading-none">
@@ -356,9 +305,7 @@ const Contato = () => {
                       Seu pet precisa
                       <br />
                       de ajuda?{" "}
-                      <span style={{ color: "hsl(12 80% 62%)" }}>
-                        Agora.
-                      </span>
+                      <span style={{ color: "hsl(12 80% 62%)" }}>Agora.</span>
                     </motion.h1>
 
                     {/* Subtitle */}
@@ -368,52 +315,32 @@ const Contato = () => {
                       style={{ color: "rgba(255,255,255,0.55)" }}
                     >
                       Atendimento veterinário de urgência <strong className="text-white/80">24 horas</strong>, todos os dias.
-                      Equipe pronta, centro cirúrgico próprio, diagnóstico por imagem.{" "}
-                      <strong className="text-white/80">Não espere.</strong>
+                      Preencha e sua mensagem chega pronta no nosso WhatsApp. <strong className="text-white/80">Sem espera.</strong>
                     </motion.p>
 
-                    {/* CTAs — Urgência (vermelho) + WhatsApp */}
+                    {/* CTAs */}
                     <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-10">
-                      {/* Desktop: WhatsApp urgência */}
-                      <MagneticButton
-                        href={WA_EMERGENCY}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hidden md:inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-bold text-white text-[15px]"
+                      <MagneticCtaButton
+                        intent="urgencia"
+                        preselectMotivo="Urgência / Emergência"
+                        className="inline-flex items-center gap-2.5 px-7 py-4 rounded-full font-bold text-white text-[15px]"
                         style={{
                           background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 48%) 100%)",
                           boxShadow: "0 12px 32px -8px hsla(12, 76%, 56%, 0.65)",
                         }}
                       >
-                        <Phone className="w-4.5 h-4.5" strokeWidth={2.5} />
+                        <MessageCircle className="w-4 h-4" strokeWidth={2.5} />
                         Urgência 24h
-                      </MagneticButton>
+                      </MagneticCtaButton>
 
-                      {/* Mobile: tel direto */}
-                      <MagneticButton
-                        href={TEL}
-                        className="inline-flex md:hidden items-center gap-2.5 px-7 py-4 rounded-full font-bold text-white text-[15px]"
-                        style={{
-                          background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 48%) 100%)",
-                          boxShadow: "0 12px 32px -8px hsla(12, 76%, 56%, 0.65)",
-                        }}
-                      >
-                        <Phone className="w-4.5 h-4.5" strokeWidth={2.5} />
-                        Ligar agora — Urgência
-                      </MagneticButton>
-
-                      {/* Scroll pro formulário */}
-                      <MagneticButton
-                        href="#formulario"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          document.getElementById("formulario")?.scrollIntoView({ behavior: "smooth" });
-                        }}
+                      <MagneticCtaButton
+                        intent="consulta"
+                        preselectMotivo="Consulta / Check-up"
                         className="inline-flex items-center gap-2 px-6 py-4 rounded-full font-semibold text-white/90 text-sm border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
                       >
                         Agendar consulta
                         <ArrowRight className="w-4 h-4" strokeWidth={2} />
-                      </MagneticButton>
+                      </MagneticCtaButton>
                     </motion.div>
 
                     {/* Trust strip */}
@@ -437,27 +364,36 @@ const Contato = () => {
             </div>
           </motion.div>
 
-          {/* Telefone strip */}
+          {/* Trust strip no rodapé do hero (sem telefone direto) */}
           <div className="relative z-10 border-t" style={{ borderColor: "rgba(255,255,255,0.07)", backgroundColor: "rgba(0,0,0,0.2)" }}>
             <div className="max-w-6xl mx-auto px-6 lg:px-10 py-5 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <Phone className="w-5 h-5" style={{ color: "hsl(12 80% 62%)" }} strokeWidth={2} />
-                <div>
-                  <p className="text-white font-bold text-lg tracking-tight">(81) 3126-7555</p>
-                  <p className="text-[11px] text-white/40 font-medium">Todas as unidades, 24h</p>
-                </div>
-              </div>
               <div className="flex items-center gap-2 text-xs text-white/40">
                 <ShieldCheck className="w-4 h-4" style={{ color: "hsl(155 83% 55%)" }} />
                 <span>CRMV/PE regular</span>
                 <span className="opacity-30">•</span>
+                <span>Centro cirúrgico próprio</span>
+                <span className="opacity-30">•</span>
                 <span>Laboratório próprio</span>
               </div>
+              <MagneticCtaButton
+                intent="whatsapp"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold text-white"
+                style={{
+                  background: "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
+                  boxShadow: "0 4px 14px -4px hsla(155, 83%, 40%, 0.5)",
+                }}
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.5.5 0 00.611.611l4.458-1.495A11.943 11.943 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.325 0-4.47-.754-6.213-2.032l-.354-.27-3.666 1.228 1.228-3.666-.27-.354A9.935 9.935 0 012 12C2 6.486 6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z" />
+                </svg>
+                Fale conosco
+              </MagneticCtaButton>
             </div>
           </div>
         </section>
 
-        {/* ═══ UNIDADES — Onde estamos ═══ */}
+        {/* ═══ UNIDADES — sem Ligar, sem Como Chegar ═══ */}
         <section className="relative py-16 md:py-20 border-t" style={{ backgroundColor: "hsl(170 35% 6%)", borderColor: "rgba(255,255,255,0.06)" }}>
           <div className="max-w-6xl mx-auto px-6 lg:px-10">
             <motion.div
@@ -508,25 +444,17 @@ const Contato = () => {
                       <p className="text-sm text-white/60">{u.address}</p>
                     </div>
 
-                    <div className="flex gap-2">
-                      <a
-                        href={TEL}
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-white"
-                        style={{ background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 48%) 100%)" }}
-                      >
-                        <Phone className="w-3 h-3" strokeWidth={2.5} />
-                        Ligar
-                      </a>
-                      <a
-                        href={u.mapsLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold border border-white/10 text-white/70 bg-white/[0.04] hover:bg-white/[0.08] transition-colors"
-                      >
-                        <Navigation className="w-3 h-3" strokeWidth={2} />
-                        Como chegar
-                      </a>
-                    </div>
+                    {/* CTA único: preencher dados pra atendimento */}
+                    <MagneticCtaButton
+                      intent="agendar"
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white"
+                      style={{
+                        background: "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
+                      }}
+                    >
+                      Agendar atendimento
+                      <ArrowRight className="w-3 h-3" strokeWidth={2.5} />
+                    </MagneticCtaButton>
                   </div>
                 </motion.div>
               ))}
@@ -534,54 +462,80 @@ const Contato = () => {
           </div>
         </section>
 
-        {/* ═══ FORMULÁRIO — mais conciso ═══ */}
+        {/* ═══ FORMULÁRIO INLINE (opcional, como alternativa ao modal) ═══
+             Removido — o modal agora é o único ponto de captura.
+             Substituído por um bloco de destaque + big CTA. */}
         <section
           id="formulario"
-          className="relative py-16 md:py-20 border-t scroll-mt-24"
+          className="relative py-16 md:py-24 border-t scroll-mt-24 overflow-hidden"
           style={{ backgroundColor: "hsl(170 35% 8%)", borderColor: "rgba(255,255,255,0.06)" }}
         >
-          <div className="max-w-5xl mx-auto px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-start">
-              {/* Left: copy + testimonials */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-80px" }}
-                transition={{ type: "spring", stiffness: 90, damping: 18 }}
+          <div
+            aria-hidden
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full pointer-events-none"
+            style={{ background: "radial-gradient(circle, hsl(155 83% 40% / 0.08) 0%, transparent 60%)" }}
+          />
+
+          <div className="relative max-w-5xl mx-auto px-6 lg:px-10 grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-12 items-center">
+            {/* Esquerda: copy */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-80px" }}
+              transition={{ type: "spring", stiffness: 90, damping: 18 }}
+            >
+              <p className="text-[11px] font-semibold tracking-widest uppercase mb-3" style={{ color: "hsl(155 83% 55%)" }}>
+                Atendimento ágil
+              </p>
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight leading-[1.05] mb-5">
+                Preencha e seu
+                <br />
+                atendimento{" "}
+                <span style={{ color: "hsl(155 83% 55%)" }}>já começa.</span>
+              </h2>
+              <p className="text-white/50 text-base md:text-lg leading-relaxed mb-8 max-w-md">
+                Só 4 campos. Sua mensagem chega pronta no nosso WhatsApp com seus dados
+                e motivo. A equipe te recebe sabendo exatamente o que você precisa.
+              </p>
+
+              <MagneticCtaButton
+                intent="agendar"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-white text-base"
+                style={{
+                  background: "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
+                  boxShadow: "0 16px 40px -10px hsla(155, 83%, 40%, 0.55)",
+                }}
               >
-                <p className="text-[11px] font-semibold tracking-widest uppercase mb-3" style={{ color: "hsl(155 83% 55%)" }}>
-                  Agendar atendimento
-                </p>
-                <h2 className="font-display text-3xl md:text-4xl font-bold text-white tracking-tight leading-[1.05] mb-4">
-                  Não é urgência?
-                  <br />
-                  Deixe seus dados.
-                </h2>
-                <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-md">
-                  Preencha o formulário ao lado — nossa equipe retorna em minutos pelo seu WhatsApp. Simples e rápido.
-                </p>
+                <MessageCircle className="w-5 h-5" strokeWidth={2.5} />
+                Começar agora
+                <ArrowRight className="w-4 h-4" strokeWidth={2.5} />
+              </MagneticCtaButton>
+            </motion.div>
 
-                {/* Mini testimonials */}
-                <div className="space-y-3">
-                  {TESTIMONIALS.map((t) => (
-                    <div key={t.name} className="rounded-xl p-4 border" style={{ backgroundColor: "hsl(170 35% 10% / 0.5)", borderColor: "rgba(255,255,255,0.06)" }}>
-                      <div className="flex gap-0.5 mb-2">
-                        {Array.from({ length: t.stars }).map((_, j) => (
-                          <Star key={j} className="w-3 h-3 fill-current" style={{ color: "hsl(43 95% 65%)" }} />
-                        ))}
-                      </div>
-                      <p className="text-xs text-white/55 leading-relaxed mb-2">"{t.text}"</p>
-                      <p className="text-[11px] text-white/35 font-medium">{t.name} — {t.pet}</p>
-                    </div>
-                  ))}
+            {/* Direita: testimonials */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, margin: "-80px" }}
+              transition={{ type: "spring", stiffness: 90, damping: 18, delay: 0.1 }}
+              className="space-y-3"
+            >
+              {TESTIMONIALS.map((t) => (
+                <div
+                  key={t.name}
+                  className="rounded-xl p-5 border"
+                  style={{ backgroundColor: "hsl(170 35% 10% / 0.5)", borderColor: "rgba(255,255,255,0.06)" }}
+                >
+                  <div className="flex gap-0.5 mb-2">
+                    {Array.from({ length: t.stars }).map((_, j) => (
+                      <Star key={j} className="w-3 h-3 fill-current" style={{ color: "hsl(43 95% 65%)" }} />
+                    ))}
+                  </div>
+                  <p className="text-sm text-white/60 leading-relaxed mb-2">"{t.text}"</p>
+                  <p className="text-[11px] text-white/40 font-medium">{t.name} — {t.pet}</p>
                 </div>
-              </motion.div>
-
-              {/* Right: form */}
-              <div className="lg:sticky lg:top-28">
-                <LeadForm />
-              </div>
-            </div>
+              ))}
+            </motion.div>
           </div>
         </section>
 
@@ -593,7 +547,7 @@ const Contato = () => {
           seoText={CONTATO_SEO_TEXT}
         />
 
-        {/* ═══ CTA FINAL ═══ */}
+        {/* ═══ CTA FINAL — sem telefone, só WhatsApp ═══ */}
         <section
           className="relative py-20 border-t overflow-hidden"
           style={{ backgroundColor: "hsl(170 35% 6%)", borderColor: "rgba(255,255,255,0.06)" }}
@@ -610,39 +564,37 @@ const Contato = () => {
               <h2 className="font-display text-3xl md:text-5xl font-bold text-white tracking-tight mb-5 leading-[1.05]">
                 Seu pet não pode esperar?
                 <br />
-                <span style={{ color: "hsl(12 80% 62%)" }}>Ligue agora.</span>
+                <span style={{ color: "hsl(12 80% 62%)" }}>Fale conosco agora.</span>
               </h2>
               <p className="text-white/50 text-base md:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
-                Atendemos urgências veterinárias 24 horas, 365 dias por ano. Três unidades em Recife prontas para receber seu pet.
+                Atendemos urgências veterinárias 24 horas, 365 dias por ano. Preencha e
+                já mandamos pro nosso WhatsApp com seus dados.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
-                {/* Urgência — vermelho */}
-                <MagneticButton
-                  href={TEL}
+                <MagneticCtaButton
+                  intent="urgencia"
+                  preselectMotivo="Urgência / Emergência"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-bold text-white text-[15px] w-full sm:w-auto"
                   style={{
                     background: "linear-gradient(135deg, hsl(12 76% 56%) 0%, hsl(8 80% 48%) 100%)",
                     boxShadow: "0 16px 40px -12px hsla(12, 76%, 56%, 0.6)",
                   }}
                 >
-                  <Phone className="w-4 h-4" strokeWidth={2.5} />
-                  (81) 3126-7555
-                </MagneticButton>
+                  <MessageCircle className="w-4 h-4" strokeWidth={2.5} />
+                  Urgência 24h
+                </MagneticCtaButton>
 
-                {/* WhatsApp — verde */}
-                <MagneticButton
-                  href={WA_GENERAL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <MagneticCtaButton
+                  intent="consulta"
+                  preselectMotivo="Consulta / Check-up"
                   className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-semibold text-white text-sm w-full sm:w-auto"
                   style={{
                     background: "linear-gradient(135deg, hsl(155 83% 40%) 0%, hsl(155 83% 24%) 100%)",
                     boxShadow: "0 14px 34px -10px hsla(155, 83%, 40%, 0.55)",
                   }}
                 >
-                  <WhatsAppIcon className="w-4 h-4" />
-                  Fale conosco
-                </MagneticButton>
+                  Agendar consulta
+                </MagneticCtaButton>
               </div>
             </motion.div>
           </div>
@@ -651,6 +603,50 @@ const Contato = () => {
         <ConversionFooter />
       </div>
     </div>
+  );
+};
+
+/* ══════════════════════════════════════════════════════════════════════
+   Página /contato
+   ══════════════════════════════════════════════════════════════════════ */
+
+const Contato = () => {
+  useSeo({
+    title: "Urgência Veterinária 24h em Recife | Hospital Harmonia",
+    description:
+      "Atendimento veterinário de urgência 24 horas em Recife. 3 unidades, equipe pronta, centro cirúrgico próprio. Preencha e receba atendimento pelo WhatsApp em segundos.",
+    canonical: "https://hospitalvetharmonia.com.br/contato",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "VeterinaryCare",
+        name: "Hospital Veterinário Harmonia",
+        description:
+          "Hospital veterinário com atendimento de urgência 24h em Recife. 3 unidades, 24 especialidades, centro cirúrgico e diagnóstico por imagem.",
+        url: "https://hospitalvetharmonia.com.br/contato",
+        telephone: "+55-81-3126-7555",
+        priceRange: "$$",
+        openingHours: "Mo-Su 00:00-23:59",
+        areaServed: { "@type": "City", name: "Recife" },
+        address: [
+          { "@type": "PostalAddress", streetAddress: "Estr. do Encanamento, 585", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
+          { "@type": "PostalAddress", streetAddress: "Av. Visc. de Albuquerque, 894", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
+          { "@type": "PostalAddress", streetAddress: "Av. Eng. Domingos Ferreira, 3628", addressLocality: "Recife", addressRegion: "PE", addressCountry: "BR" },
+        ],
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.9",
+          reviewCount: "2000",
+        },
+      },
+      buildFaqJsonLd(CONTATO_FAQS),
+    ],
+  });
+
+  return (
+    <LeadCaptureProvider>
+      <ContatoContent />
+    </LeadCaptureProvider>
   );
 };
 

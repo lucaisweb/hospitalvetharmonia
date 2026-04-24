@@ -1,13 +1,6 @@
 /**
  * Envia um lead para a Vercel Function /api/lead, que repassa ao Google
- * Sheets via Apps Script. A URL do Apps Script fica apenas no servidor
- * (env var LEADS_WEBHOOK_URL) e NUNCA é enviada ao browser — sem prefixo
- * VITE_, portanto não entra no bundle do cliente.
- *
- * Vantagens sobre chamar o Apps Script direto:
- *   - URL do webhook fica escondida
- *   - Dá pra ler o status real da resposta (sem `no-cors`)
- *   - Validação, rate-limit e honeypot rodam server-side
+ * Sheets via Apps Script. A URL do Apps Script fica apenas no servidor.
  */
 
 export type LeadPayload = {
@@ -15,10 +8,28 @@ export type LeadPayload = {
   whatsapp: string;
   email?: string;
   petNome?: string;
-  petEspecie: string;
+  petEspecie?: string;
   motivo: string;
-  unidade: string;
+  unidade?: string;
   mensagem?: string;
+
+  /* Tracking / atribuição — preenchido por useTracking */
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  utm_term?: string;
+  fbclid?: string;
+  gclid?: string;
+  ttclid?: string;
+  msclkid?: string;
+  referrer?: string;
+  landingPath?: string;
+  landingUrl?: string;
+  firstVisit?: string;
+
+  /* Intent do CTA que abriu o modal (urgencia, consulta, agendar...) */
+  intent?: string;
 };
 
 export async function submitLead(data: LeadPayload): Promise<void> {
