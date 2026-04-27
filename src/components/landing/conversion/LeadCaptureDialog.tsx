@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -287,62 +288,59 @@ export function LeadCaptureProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  return (
-    <LeadCaptureContext.Provider value={{ open }}>
-      {children}
+  const dialogPortal = (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
+          {/* Backdrop */}
+          <motion.div
+            key="backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={close}
+            className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+          />
 
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              key="backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={close}
-              className="fixed inset-0 z-[70] bg-black/75 backdrop-blur-sm"
+          {/* Dialog */}
+          <motion.div
+            key="dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lead-dialog-title"
+            initial={{ opacity: 0, y: 32, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.97 }}
+            transition={{ type: "spring", stiffness: 300, damping: 28 }}
+            className="relative w-full max-w-md max-h-[calc(100dvh-2rem)] sm:max-h-[calc(100dvh-3rem)] flex flex-col rounded-2xl border overflow-hidden"
+            style={{
+              backgroundColor: "hsl(170 35% 9%)",
+              borderColor: "rgba(255,255,255,0.1)",
+              boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)",
+            }}
+          >
+            {/* Glow top */}
+            <div
+              aria-hidden
+              className="absolute -top-24 left-1/2 -translate-x-1/2 w-[120%] h-48 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at top, hsl(155 83% 40% / 0.3) 0%, transparent 70%)",
+              }}
             />
 
-            {/* Dialog */}
-            <motion.div
-              key="dialog"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="lead-dialog-title"
-              initial={{ opacity: 0, y: 32, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 300, damping: 28 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[71] w-[92vw] max-w-md rounded-2xl border overflow-hidden"
-              style={{
-                backgroundColor: "hsl(170 35% 9%)",
-                borderColor: "rgba(255,255,255,0.1)",
-                boxShadow: "0 40px 100px -20px rgba(0,0,0,0.8)",
-              }}
+            {/* Close */}
+            <button
+              ref={closeBtnRef}
+              onClick={close}
+              aria-label="Fechar"
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors z-10"
             >
-              {/* Glow top */}
-              <div
-                aria-hidden
-                className="absolute -top-24 left-1/2 -translate-x-1/2 w-[120%] h-48 pointer-events-none"
-                style={{
-                  background:
-                    "radial-gradient(ellipse at top, hsl(155 83% 40% / 0.3) 0%, transparent 70%)",
-                }}
-              />
+              <X className="w-4 h-4" />
+            </button>
 
-              {/* Close */}
-              <button
-                ref={closeBtnRef}
-                onClick={close}
-                aria-label="Fechar"
-                className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors z-10"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="relative p-6 md:p-8">
+            <div className="relative p-6 md:p-8 overflow-y-auto overscroll-contain">
                 {/* Badge */}
                 <div className="mb-4">
                   <span
@@ -506,11 +504,17 @@ export function LeadCaptureProvider({ children }: { children: ReactNode }) {
                     Seus dados só são usados pra te retornarmos. Sem spam.
                   </p>
                 </form>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
+  return (
+    <LeadCaptureContext.Provider value={{ open }}>
+      {children}
+      {typeof document !== "undefined" && createPortal(dialogPortal, document.body)}
     </LeadCaptureContext.Provider>
   );
 }
