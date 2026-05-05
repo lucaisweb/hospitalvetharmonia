@@ -23,6 +23,7 @@ import {
 } from "@/components/landing/conversion/LeadCaptureDialog";
 import { CountUp } from "@/components/ui/count-up";
 import { useSeo } from "@/hooks/use-seo";
+import { useGtm } from "@/hooks/use-gtm";
 import recifeBg from "@/assets/hero-hvh.png";
 import logoFull from "@/assets/logo-full.png";
 import simboloHarmonia from "@/assets/simbolo-harmonia.png";
@@ -611,6 +612,7 @@ const ContatoContent = () => {
    ══════════════════════════════════════════════════════════════════════ */
 
 const Contato = () => {
+  useGtm("GTM-PTKS6KJB");
   useSeo({
     title: "Urgência Veterinária 24h em Recife | Hospital Harmonia",
     description:
